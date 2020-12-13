@@ -41,6 +41,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
     public DcMotor  backLeft   = null;
     public DcMotor  backRight  = null;
     public DcMotor wobbleGoalArm = null;
+    public DcMotor flyWheel = null;
 
 
     /* local OpMode members. */
@@ -63,6 +64,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
         backLeft   = hwMap.get(DcMotor.class, "back_left");
         backRight  = hwMap.get(DcMotor.class, "back_right");
         wobbleGoalArm  = hwMap.get(DcMotor.class, "wobble_goal_arm");
+        flyWheel  = hwMap.get(DcMotor.class, "flywheel");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE); // Reverse direction of left drive motors.
         frontRight.setDirection(DcMotor.Direction.FORWARD);
@@ -75,6 +77,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
         backLeft.setPower(0);
         backRight.setPower(0);
         wobbleGoalArm.setPower(0);
+        flyWheel.setPower(0);
         // Set all motors to run without encoders.
 
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
