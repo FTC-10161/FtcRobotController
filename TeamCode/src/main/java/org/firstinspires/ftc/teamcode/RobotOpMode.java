@@ -60,7 +60,7 @@ public class RobotOpMode extends OpMode {
 
         //Wait specified time-period while driving and displaying direction.
         runtime.reset();
-        while(runtime.milliseconds() < duration) {
+        while(runtime.milliseconds() < (duration*1000)) {
             telemetry.addData("Driving", direction);
             telemetry.update();
         }
