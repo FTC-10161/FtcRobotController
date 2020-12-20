@@ -59,11 +59,18 @@ public class RobotOpMode extends OpMode {
         }
 
         //Wait specified time-period while driving and displaying direction.
+        runtime.reset();
         while(runtime.milliseconds() < duration) {
             telemetry.addData("Driving", direction);
+            telemetry.update();
         }
 
-        //Reset clock.
-        runtime.reset();
+        //Stop all motors
+        hardware.frontLeft.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backRight.setPower(0);
+        telemetry.addLine("Robot Stopped");
+        telemetry.update();
     }
 }
