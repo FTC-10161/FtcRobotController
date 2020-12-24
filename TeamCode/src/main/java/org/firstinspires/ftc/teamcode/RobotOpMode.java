@@ -13,10 +13,28 @@ public class RobotOpMode extends OpMode {
     ULTIMATE_GOAL_HARDWARE_MAP hardware  = new ULTIMATE_GOAL_HARDWARE_MAP();
     ElapsedTime runtime = new ElapsedTime();
     BNO055IMU imu;
+    BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
     @Override
     public void init() {
         hardware.init(hardwareMap);
+
+        parameters.mode = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled = false;
+
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
+
+        imu.initialize(parameters);
+
+        telemetry.addData("Mode", "calibrating...");
+        telemetry.update();
+
+        telemetry.addData("Mode", "waiting for start");
+        telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
+        telemetry.update();
+
     }
 
     @Override
