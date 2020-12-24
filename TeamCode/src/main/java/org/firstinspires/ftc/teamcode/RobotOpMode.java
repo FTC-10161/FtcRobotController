@@ -44,7 +44,8 @@ public class RobotOpMode extends OpMode {
 
     //////////////////////////////////////////////////////////// WAIT FUNCTION ////////////////////////////////////////////////////////////
     public void pause (double duration){
-        while(runtime.milliseconds() < (duration*1000)) {
+        runtime.reset();
+        while(runtime.milliseconds() > (duration*1000)) {
             telemetry.addData("Waiting", duration);
             telemetry.update();
             }
