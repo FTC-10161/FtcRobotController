@@ -144,22 +144,22 @@ public class RobotOpMode extends OpMode {
                     hardware.backRight.setPower((speed/100) - correction);
                     break;
                 case "backward":
-                    hardware.frontLeft.setPower(-(speed/100) - correction);
-                    hardware.backLeft.setPower(-(speed/100) - correction);
-                    hardware.frontRight.setPower(-(speed/100) + correction);
-                    hardware.backRight.setPower(-(speed/100) + correction);
+                    hardware.frontLeft.setPower(-(speed/100) + correction);
+                    hardware.backLeft.setPower(-(speed/100) + correction);
+                    hardware.frontRight.setPower(-(speed/100) - correction);
+                    hardware.backRight.setPower(-(speed/100) - correction);
                     break;
                 case "rightward":
                     hardware.frontLeft.setPower((speed/100) + correction);
                     hardware.backLeft.setPower((-speed/100) - correction);
-                    hardware.frontRight.setPower((-speed/100) + correction);
-                    hardware.backRight.setPower((speed/100) - correction);
+                    hardware.frontRight.setPower((-speed/100) - correction);
+                    hardware.backRight.setPower((speed/100) + correction);
                     break;
                 case "leftward":
                     hardware.frontLeft.setPower((-speed/100) - correction);
                     hardware.backLeft.setPower((speed/100) + correction);
-                    hardware.frontRight.setPower((speed/100) - correction);
-                    hardware.backRight.setPower((-speed/100) + correction);
+                    hardware.frontRight.setPower((speed/100) + correction);
+                    hardware.backRight.setPower((-speed/100) - correction);
                     break;
                 default:                                 //If direction is not valid, says so via telemetry.
                     telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
