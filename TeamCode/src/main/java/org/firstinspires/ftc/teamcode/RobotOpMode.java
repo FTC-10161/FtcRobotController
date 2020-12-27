@@ -43,14 +43,14 @@ public class RobotOpMode extends OpMode {
 
 
     //////////////////////////////////////////////////////////// WAIT FUNCTION ////////////////////////////////////////////////////////////
-    public void pause (double duration){
+    public void pause(double duration) {
         runtime.reset();
-        while(runtime.milliseconds() < (duration*1000)) {
+        while (runtime.milliseconds() < (duration * 1000)) {
             telemetry.addData("Waiting", duration);
             telemetry.update();
-            }
         }
-
+        runtime.reset();
+    }
 
 
     //////////////////////////////////////////////////////////// DRIVE FUNCTION ////////////////////////////////////////////////////////////
@@ -114,7 +114,7 @@ public class RobotOpMode extends OpMode {
 
 
     //////////////////////////////////////////////////////////// GYRO DRIVE FUNCTION ////////////////////////////////////////////////////////////
-    public void gyroDrive (String direction, double speed, double duration){
+    public void gyroDrive(String direction, double speed, double duration){
         double heading;
         double correction;
         runtime.reset();
