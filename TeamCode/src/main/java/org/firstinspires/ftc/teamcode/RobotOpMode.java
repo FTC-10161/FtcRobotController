@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.linearOpMode;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 
@@ -8,7 +10,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class RobotOpMode extends OpMode {
+
+
+public class RobotOpMode extends LinearOpMode {
 
     ULTIMATE_GOAL_HARDWARE_MAP hardware  = new ULTIMATE_GOAL_HARDWARE_MAP();
     ElapsedTime runtime = new ElapsedTime();
@@ -16,7 +20,12 @@ public class RobotOpMode extends OpMode {
     BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
     @Override
-    public void init() {
+    public void runOpMode() {
+
+    }
+
+    //////////////////////////////////////////////////////////// GYRO INIT FUNCTION ////////////////////////////////////////////////////////////
+    public void gyroInit() {
         hardware.init(hardwareMap);
 
         parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -34,13 +43,7 @@ public class RobotOpMode extends OpMode {
         telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
-
     }
-
-    @Override
-    public void loop() {    }
-
-
 
     //////////////////////////////////////////////////////////// WAIT FUNCTION ////////////////////////////////////////////////////////////
     public void pause(double duration) {

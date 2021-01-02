@@ -7,7 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class Movement_Test extends RobotOpMode {
 
     @Override
-    public void start() {
+    public void runOpMode() {
+        waitForStart();
         gyroDrive("forward", 25, 6);
         pause(1);
         gyroDrive("rightward", 25, 6);
