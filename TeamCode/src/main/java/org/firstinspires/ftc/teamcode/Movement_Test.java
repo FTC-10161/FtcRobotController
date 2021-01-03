@@ -9,6 +9,9 @@ public class Movement_Test extends RobotOpMode {
     @Override
     public void runOpMode() {
         waitForStart();
+
+        gyroInit();
+
         gyroDrive("forward", 25, 6);
         pause(1);
         gyroDrive("rightward", 25, 6);
