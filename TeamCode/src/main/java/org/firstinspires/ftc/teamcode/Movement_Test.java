@@ -10,7 +10,7 @@ public class Movement_Test extends RobotOpMode {
     public void runOpMode() {
         waitForStart();
 
-        gyroInit();
+        hardwareInit();
 
         gyroDrive("forward", 25, 6);
         pause(1);

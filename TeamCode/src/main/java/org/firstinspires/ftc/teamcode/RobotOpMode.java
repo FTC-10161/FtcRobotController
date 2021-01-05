@@ -25,7 +25,7 @@ public class RobotOpMode extends LinearOpMode {
     }
 
     //////////////////////////////////////////////////////////// GYRO INIT FUNCTION ////////////////////////////////////////////////////////////
-    public void gyroInit() {
+    public void hardwareInit() {
         hardware.init(hardwareMap);
 
         parameters.mode = BNO055IMU.SensorMode.IMU;
@@ -40,7 +40,6 @@ public class RobotOpMode extends LinearOpMode {
         telemetry.addData("Mode", "calibrating...");
         telemetry.update();
 
-        telemetry.addData("Mode", "waiting for start");
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
     }
