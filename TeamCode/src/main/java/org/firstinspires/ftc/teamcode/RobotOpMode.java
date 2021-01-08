@@ -115,8 +115,8 @@ public class RobotOpMode extends LinearOpMode {
 
 
 
-    //////////////////////////////////////////////////////////// GYRO DRIVE FUNCTION ////////////////////////////////////////////////////////////
-    public void gyroDrive(String direction, double speed, double duration){
+    //////////////////////////////////////////////////////////// GYRO DRIVE ELAPSED TIME FUNCTION ////////////////////////////////////////////////////////////
+    public void gyroTimeDrive(String direction, double speed, double duration){
         double heading;
         double correction;
         runtime.reset();
