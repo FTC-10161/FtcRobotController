@@ -12,13 +12,13 @@ public class Movement_Test extends RobotOpMode {
 
         hardwareInit();
 
-        gyroDrive("forward", 25, 6);
+        gyroEncoderDrive("forward", 35, 4);
         pause(1);
-        gyroDrive("rightward", 25, 6);
+        gyroEncoderDrive("rightward", 35, 4);
         pause(1);
-        gyroDrive("backward", 25, 6);
+        gyroEncoderDrive("backward", 35, 4);
         pause(1);
-        gyroDrive("leftward", 25, 6);
+        gyroEncoderDrive("leftward", 35, 4);
         pause(1);
     }
 }

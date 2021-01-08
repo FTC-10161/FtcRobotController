@@ -80,7 +80,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
         flyWheel.setPower(0);
         // Set all motors to run without encoders.
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
