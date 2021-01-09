@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 
@@ -9,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import static java.lang.Math.abs;
 
 
 public class RobotOpMode extends LinearOpMode {
@@ -193,7 +195,9 @@ public class RobotOpMode extends LinearOpMode {
             telemetry.update();
         }
 
-        while(current_encoder_count < (target_revolution_count*1120)) {
+        hardware.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        while(abs(current_encoder_count) < (target_revolution_count*1120)) {
             Orientation angles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             this.imu.getPosition();
             heading = angles.firstAngle;
