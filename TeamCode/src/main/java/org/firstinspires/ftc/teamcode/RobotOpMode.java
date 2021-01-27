@@ -195,7 +195,7 @@ public class RobotOpMode extends LinearOpMode {
             telemetry.update();
         }
 
-        hardware.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         while(abs(current_encoder_count) < (target_revolution_count*1120)) {
             Orientation angles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -238,7 +238,7 @@ public class RobotOpMode extends LinearOpMode {
                     break;
             }
 
-            current_encoder_count = hardware.frontLeft.getCurrentPosition();     //Store encoder position from one to the wheels
+            current_encoder_count = hardware.frontRight.getCurrentPosition();     //Store encoder position from one to the wheels
         }
         //Stop all motors
         hardware.frontLeft.setPower(0);
