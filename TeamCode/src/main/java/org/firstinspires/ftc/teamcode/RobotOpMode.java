@@ -196,6 +196,7 @@ public class RobotOpMode extends LinearOpMode {
         }
 
         hardware.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         while(abs(current_encoder_count) < (target_revolution_count*1120)) {
             Orientation angles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
