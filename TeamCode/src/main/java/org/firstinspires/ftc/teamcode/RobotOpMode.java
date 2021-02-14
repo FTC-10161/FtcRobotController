@@ -25,8 +25,8 @@ public class RobotOpMode extends LinearOpMode {
     BNO055IMU imu;
     BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
-    private OpenCvInternalCamera phoneCam;
-    private Starter_Stack_Detector starter_stack_detector = new Starter_Stack_Detector();
+    public OpenCvInternalCamera phoneCam;
+    public Starter_Stack_Detector starter_stack_detector = new Starter_Stack_Detector();
 
     @Override
     public void runOpMode() {
@@ -51,6 +51,12 @@ public class RobotOpMode extends LinearOpMode {
 
         telemetry.addData("imu calibration status", imu.getCalibrationStatus().toString());
         telemetry.update();
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        phoneCam.openCameraDevice();
+        phoneCam.setPipeline(starter_stack_detector);
+        phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
     }
 
     //////////////////////////////////////////////////////////// WAIT FUNCTION ////////////////////////////////////////////////////////////
@@ -253,18 +259,6 @@ public class RobotOpMode extends LinearOpMode {
         hardware.backRight.setPower(0);
         telemetry.addLine("Robot Stopped");
         telemetry.update();
-    }
-
-    //////////////////////////////////////////////////////////// STARTER STACK DETECTOR FUNCTION ////////////////////////////////////////////////////////////
-    public void StarterStackConfiguration() {
-
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        phoneCam.openCameraDevice();
-        phoneCam.setPipeline(starter_stack_detector);
-        phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-
-        int configuration = starter_stack_detector.configuration;
     }
 
 }
