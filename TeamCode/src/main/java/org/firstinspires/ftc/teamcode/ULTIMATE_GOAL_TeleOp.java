@@ -61,7 +61,7 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
         double yDrive;
         double turn;
         double driveSpeed = 0.5;
-        double flyWheel;
+        double translation;
         boolean armBack;
         boolean armFront;
 
@@ -86,7 +86,7 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             turn = gamepad1.left_stick_x;
             armBack = gamepad1.b;
             armFront = gamepad1.a;
-            flyWheel = gamepad1.right_trigger;
+            translation = gamepad1.right_trigger;
 
             // check bumpers of controller 1 in order to set drive speed
             if (gamepad1.left_bumper)
@@ -164,11 +164,11 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.wobbleGoalArm.setPower(0);
             }
 
-            if (flyWheel > 0.2) {
-                calculester.flyWheel.setPower(1);
+            if (translation > 0.2) {
+                calculester.translation.setPower(-0.5);
             }
             else {
-                calculester.flyWheel.setPower(0);
+                calculester.translation.setPower(0);
             }
 
         }
