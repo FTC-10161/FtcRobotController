@@ -10,15 +10,23 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+
+
 import static java.lang.Math.abs;
 
 
 public class RobotOpMode extends LinearOpMode {
 
-    ULTIMATE_GOAL_HARDWARE_MAP hardware  = new ULTIMATE_GOAL_HARDWARE_MAP();
+    ULTIMATE_GOAL_HARDWARE_MAP hardware = new ULTIMATE_GOAL_HARDWARE_MAP();
     ElapsedTime runtime = new ElapsedTime();
     BNO055IMU imu;
     BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+    private OpenCvInternalCamera phoneCam;
+    private Starter_Stack_Detector starter_stack_detector = new Starter_Stack_Detector();
 
     @Override
     public void runOpMode() {
@@ -57,7 +65,7 @@ public class RobotOpMode extends LinearOpMode {
 
 
     //////////////////////////////////////////////////////////// DRIVE FUNCTION ////////////////////////////////////////////////////////////
-    public void drive(String direction,double speed, double duration){
+    public void drive(String direction, double speed, double duration) {
 
         //Make sure that speed value is a value between 0 and 100 inclusive. If not, say so via telemetry.
         if (speed <= 0 || speed >= 100) {
@@ -100,7 +108,7 @@ public class RobotOpMode extends LinearOpMode {
 
         //Wait specified time-period while driving and displaying direction.
         runtime.reset();
-        while(runtime.milliseconds() < (duration*1000)) {
+        while (runtime.milliseconds() < (duration * 1000)) {
             telemetry.addData("Driving", direction);
             telemetry.update();
         }
@@ -115,9 +123,8 @@ public class RobotOpMode extends LinearOpMode {
     }
 
 
-
     //////////////////////////////////////////////////////////// GYRO DRIVE ELAPSED TIME FUNCTION ////////////////////////////////////////////////////////////
-    public void gyroTimeDrive(String direction, double speed, double duration){
+    public void gyroTimeDrive(String direction, double speed, double duration) {
         double heading;
         double correction;
         runtime.reset();
@@ -129,7 +136,7 @@ public class RobotOpMode extends LinearOpMode {
             telemetry.update();
         }
 
-        while(runtime.milliseconds() < (duration*1000)) {
+        while (runtime.milliseconds() < (duration * 1000)) {
             Orientation angles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             this.imu.getPosition();
             heading = angles.firstAngle;
@@ -141,28 +148,28 @@ public class RobotOpMode extends LinearOpMode {
             //Drive in the specified direction
             switch (direction) {
                 case "forward":
-                    hardware.frontLeft.setPower((speed/100) + correction);
-                    hardware.backLeft.setPower((speed/100) + correction);
-                    hardware.frontRight.setPower((speed/100) - correction);
-                    hardware.backRight.setPower((speed/100) - correction);
+                    hardware.frontLeft.setPower((speed / 100) + correction);
+                    hardware.backLeft.setPower((speed / 100) + correction);
+                    hardware.frontRight.setPower((speed / 100) - correction);
+                    hardware.backRight.setPower((speed / 100) - correction);
                     break;
                 case "backward":
-                    hardware.frontLeft.setPower(-(speed/100) + correction);
-                    hardware.backLeft.setPower(-(speed/100) + correction);
-                    hardware.frontRight.setPower(-(speed/100) - correction);
-                    hardware.backRight.setPower(-(speed/100) - correction);
+                    hardware.frontLeft.setPower(-(speed / 100) + correction);
+                    hardware.backLeft.setPower(-(speed / 100) + correction);
+                    hardware.frontRight.setPower(-(speed / 100) - correction);
+                    hardware.backRight.setPower(-(speed / 100) - correction);
                     break;
                 case "rightward":
-                    hardware.frontLeft.setPower((speed/100) + correction);
-                    hardware.backLeft.setPower((-speed/100) + correction);
-                    hardware.frontRight.setPower((-speed/100) - correction);
-                    hardware.backRight.setPower((speed/100) - correction);
+                    hardware.frontLeft.setPower((speed / 100) + correction);
+                    hardware.backLeft.setPower((-speed / 100) + correction);
+                    hardware.frontRight.setPower((-speed / 100) - correction);
+                    hardware.backRight.setPower((speed / 100) - correction);
                     break;
                 case "leftward":
-                    hardware.frontLeft.setPower((-speed/100) + correction);
-                    hardware.backLeft.setPower((speed/100) + correction);
-                    hardware.frontRight.setPower((speed/100) - correction);
-                    hardware.backRight.setPower((-speed/100) - correction);
+                    hardware.frontLeft.setPower((-speed / 100) + correction);
+                    hardware.backLeft.setPower((speed / 100) + correction);
+                    hardware.frontRight.setPower((speed / 100) - correction);
+                    hardware.backRight.setPower((-speed / 100) - correction);
                     break;
                 default:                                 //If direction is not valid, says so via telemetry.
                     telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
@@ -180,9 +187,8 @@ public class RobotOpMode extends LinearOpMode {
     }
 
 
-
     //////////////////////////////////////////////////////////// GYRO DRIVE ENCODER FUNCTION ////////////////////////////////////////////////////////////
-    public void gyroEncoderDrive(String direction, double speed, double target_revolution_count){
+    public void gyroEncoderDrive(String direction, double speed, double target_revolution_count) {
         double heading;
         double correction;
         double current_encoder_count = 0;
@@ -197,7 +203,7 @@ public class RobotOpMode extends LinearOpMode {
 
         hardware.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        while(abs(current_encoder_count) < (target_revolution_count*1120)) {
+        while (abs(current_encoder_count) < (target_revolution_count * 1120)) {
             Orientation angles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             this.imu.getPosition();
             heading = angles.firstAngle;
@@ -209,28 +215,28 @@ public class RobotOpMode extends LinearOpMode {
             //Drive in the specified direction
             switch (direction) {
                 case "forward":
-                    hardware.frontLeft.setPower((speed/100) + correction);
-                    hardware.backLeft.setPower((speed/100) + correction);
-                    hardware.frontRight.setPower((speed/100) - correction);
-                    hardware.backRight.setPower((speed/100) - correction);
+                    hardware.frontLeft.setPower((speed / 100) + correction);
+                    hardware.backLeft.setPower((speed / 100) + correction);
+                    hardware.frontRight.setPower((speed / 100) - correction);
+                    hardware.backRight.setPower((speed / 100) - correction);
                     break;
                 case "backward":
-                    hardware.frontLeft.setPower(-(speed/100) + correction);
-                    hardware.backLeft.setPower(-(speed/100) + correction);
-                    hardware.frontRight.setPower(-(speed/100) - correction);
-                    hardware.backRight.setPower(-(speed/100) - correction);
+                    hardware.frontLeft.setPower(-(speed / 100) + correction);
+                    hardware.backLeft.setPower(-(speed / 100) + correction);
+                    hardware.frontRight.setPower(-(speed / 100) - correction);
+                    hardware.backRight.setPower(-(speed / 100) - correction);
                     break;
                 case "rightward":
-                    hardware.frontLeft.setPower((speed/100) + correction);
-                    hardware.backLeft.setPower((-speed/100) + correction);
-                    hardware.frontRight.setPower((-speed/100) - correction);
-                    hardware.backRight.setPower((speed/100) - correction);
+                    hardware.frontLeft.setPower((speed / 100) + correction);
+                    hardware.backLeft.setPower((-speed / 100) + correction);
+                    hardware.frontRight.setPower((-speed / 100) - correction);
+                    hardware.backRight.setPower((speed / 100) - correction);
                     break;
                 case "leftward":
-                    hardware.frontLeft.setPower((-speed/100) + correction);
-                    hardware.backLeft.setPower((speed/100) + correction);
-                    hardware.frontRight.setPower((speed/100) - correction);
-                    hardware.backRight.setPower((-speed/100) - correction);
+                    hardware.frontLeft.setPower((-speed / 100) + correction);
+                    hardware.backLeft.setPower((speed / 100) + correction);
+                    hardware.frontRight.setPower((speed / 100) - correction);
+                    hardware.backRight.setPower((-speed / 100) - correction);
                     break;
                 default:                                 //If direction is not valid, says so via telemetry.
                     telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
@@ -248,4 +254,17 @@ public class RobotOpMode extends LinearOpMode {
         telemetry.addLine("Robot Stopped");
         telemetry.update();
     }
+
+    //////////////////////////////////////////////////////////// STARTER STACK DETECTOR FUNCTION ////////////////////////////////////////////////////////////
+    public void StarterStackConfiguration() {
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        phoneCam.openCameraDevice();
+        phoneCam.setPipeline(starter_stack_detector);
+        phoneCam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+
+        int configuration = starter_stack_detector.configuration;
+    }
+
 }
