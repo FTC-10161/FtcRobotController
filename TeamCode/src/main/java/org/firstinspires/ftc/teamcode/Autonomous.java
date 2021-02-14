@@ -11,9 +11,9 @@ public class Autonomous extends RobotOpMode {
 
         hardwareInit();
 
-        gyroTimeDrive("leftward", 35, 8.5);
-        gyroTimeDrive("forward", 35, 1);
+        gyroEncoderDrive("leftward", 80, 5.25);
+        gyroEncoderDrive("forward", 80, 0.5);
         pause(1);
-        gyroTimeDrive("rightward", 35, 1.5);
+        gyroEncoderDrive("rightward", 80, 0.7);
     }
 }
