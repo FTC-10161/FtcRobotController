@@ -48,8 +48,13 @@ public final Mat processFrame(Mat input) {
         return input;
     }
 
+    int rowStart = 130;
+    int rowEnd = 170;
+    int colStart = 70;
+    int colEnd = 110;
+
     ///////////////////////////  RGB  ///////////////////////////
-    Mat RGB_StarterStackRegion = workingMatrix.submat(190, 233, 170, 210);
+    Mat RGB_StarterStackRegion = workingMatrix.submat(rowStart, rowEnd, colStart, colEnd);
 
     RGB_Red_C0 = Core.sumElems(RGB_StarterStackRegion).val[0];
     RGB_Green_Difference_C1 = Core.sumElems(RGB_StarterStackRegion).val[1];
@@ -59,7 +64,7 @@ public final Mat processFrame(Mat input) {
     ///////////////////////////  YCrBc  ///////////////////////////
     Imgproc.cvtColor(workingMatrix, YCrCb_Image, Imgproc.COLOR_RGB2YCrCb);    //Convert image/matrix from RGB to YCrBc.
 
-    Mat YCrBc_StarterStackRegion = workingMatrix.submat(190, 233, 170, 210);
+    Mat YCrBc_StarterStackRegion = workingMatrix.submat(rowStart, rowEnd, colStart, colEnd);
 
     YCrBc_Luma_C0 = Core.sumElems(YCrBc_StarterStackRegion).val[0];
     YCrBc_Red_Difference_C1 = Core.sumElems(YCrBc_StarterStackRegion).val[1];
@@ -69,7 +74,7 @@ public final Mat processFrame(Mat input) {
     ///////////////////////////  HSV  ///////////////////////////
     Imgproc.cvtColor(workingMatrix, HSV_Image, Imgproc.COLOR_RGB2HSV);    //Convert image/matrix from RGB to HSV.
 
-    Mat HSV_StarterStackRegion = workingMatrix.submat(190, 233, 170, 210);
+    Mat HSV_StarterStackRegion = workingMatrix.submat(rowStart, rowEnd, colStart, colEnd);
 
     HSV_Hue_C0 = Core.sumElems(HSV_StarterStackRegion).val[0];
     HSV_Saturation_C1 = Core.sumElems(HSV_StarterStackRegion).val[1];
@@ -79,7 +84,7 @@ public final Mat processFrame(Mat input) {
     ///////////////////////////  HLS  ///////////////////////////
     Imgproc.cvtColor(workingMatrix, HLS_Image, Imgproc.COLOR_RGB2HLS);    //Convert image/matrix from RGB to HLS.
 
-    Mat HLS_StarterStackRegion = workingMatrix.submat(190, 233, 170, 210);
+    Mat HLS_StarterStackRegion = workingMatrix.submat(rowStart, rowEnd, colStart, colEnd);
 
     HLS_Hue_C0 = Core.sumElems(HLS_StarterStackRegion).val[0];
     HLS_Lightness_C1 = Core.sumElems(HLS_StarterStackRegion).val[1];
@@ -89,7 +94,7 @@ public final Mat processFrame(Mat input) {
     ///////////////////////////  CIELAB  ///////////////////////////
     Imgproc.cvtColor(workingMatrix, CIElab_Image, Imgproc.COLOR_RGB2Lab);    //Convert image/matrix from RGB to CIELAB.
 
-    Mat CIELAB_StarterStackRegion = workingMatrix.submat(190, 233, 170, 210);
+    Mat CIELAB_StarterStackRegion = workingMatrix.submat(rowStart, rowEnd, colStart, colEnd);
 
     CIELAB_Lightness_C0 = Core.sumElems(CIELAB_StarterStackRegion).val[0];
     CIELAB_A_Difference_C1 = Core.sumElems(CIELAB_StarterStackRegion).val[1];
@@ -107,7 +112,7 @@ public final Mat processFrame(Mat input) {
 
 
     //Draw an on-screen rectangle around the region that we defined in the prior line.
-    Imgproc.rectangle(workingMatrix, new Rect(170, 190, 40, 30), new Scalar(0, 255, 0));
+    Imgproc.rectangle(workingMatrix, new Rect(colStart, rowStart, colEnd-colStart, rowEnd-rowStart), new Scalar(0, 255, 0));
 
     return workingMatrix;
     }

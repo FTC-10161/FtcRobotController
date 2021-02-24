@@ -14,6 +14,7 @@ public class Camera_Test extends RobotOpMode {
 		boolean A_Button;
 		boolean B_Button;
 		int i = 0;
+		boolean isPressed = false;
 
 		waitForStart();
 		hardwareInit();
@@ -23,10 +24,14 @@ public class Camera_Test extends RobotOpMode {
 			A_Button = gamepad1.a;
 			B_Button = gamepad1.b;
 
-			if (A_Button && i <= 14) {
+			if (A_Button && i < 14 && !isPressed) {
 				i++;
-			} if (B_Button && i >= 0) {
+				isPressed = true;;
+			} else if (B_Button && i > 0 && !isPressed) {
 				i--;
+				isPressed = true;
+			} else if (!A_Button && !B_Button) {
+				isPressed = false;
 			}
 
 			switch (i) {
@@ -39,7 +44,7 @@ public class Camera_Test extends RobotOpMode {
 					telemetry.update();
 					break;
 				case 2:
-					telemetry.addData("RGB_Blue:         ", starter_stack_detector.RGB_Blue_Difference_C2);
+					telemetry.addData("RGB Blue:         ", starter_stack_detector.RGB_Blue_Difference_C2);
 					telemetry.update();
 					break;
 
