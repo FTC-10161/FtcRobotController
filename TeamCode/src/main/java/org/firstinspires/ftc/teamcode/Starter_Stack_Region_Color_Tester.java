@@ -7,7 +7,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-public class Starter_Stack_Detector extends OpenCvPipeline {
+public class Starter_Stack_Region_Color_Tester extends OpenCvPipeline {
     private Mat workingMatrix = new Mat();                  //Matrix to hold input
 
     private Mat YCrCb_Image = new Mat();                          //Matrices to hold the image in different color spaces
@@ -33,11 +33,11 @@ public class Starter_Stack_Detector extends OpenCvPipeline {
     double CIELAB_Lightness_C0 = 0;
     double CIELAB_A_Difference_C1 = 0;
     double CIELAB_B_Difference_C2 = 0;
-    double CIELUVg_Lightness_C0 = 0;
-    double CIELUVg_U_Difference_C1 = 0;
-    double CIELUVg_V_Difference_C2 = 0;
+    double CIELUV_Lightness_C0 = 0;
+    double CIELUV_U_Difference_C1 = 0;
+    double CIELUV_V_Difference_C2 = 0;
 
-    public Starter_Stack_Detector() {
+    public Starter_Stack_Region_Color_Tester() {
 }
 
 @Override
@@ -64,7 +64,7 @@ public final Mat processFrame(Mat input) {
     ///////////////////////////  YCrBc  ///////////////////////////
     Imgproc.cvtColor(workingMatrix, YCrCb_Image, Imgproc.COLOR_RGB2YCrCb);    //Convert image/matrix from RGB to YCrBc.
 
-    Mat YCrBc_StarterStackRegion = workingMatrix.submat(rowStart, rowEnd, colStart, colEnd);
+    Mat YCrBc_StarterStackRegion = YCrCb_Image.submat(rowStart, rowEnd, colStart, colEnd);
 
     YCrBc_Luma_C0 = Core.sumElems(YCrBc_StarterStackRegion).val[0];
     YCrBc_Red_Difference_C1 = Core.sumElems(YCrBc_StarterStackRegion).val[1];
@@ -74,7 +74,7 @@ public final Mat processFrame(Mat input) {
     ///////////////////////////  HSV  ///////////////////////////
     Imgproc.cvtColor(workingMatrix, HSV_Image, Imgproc.COLOR_RGB2HSV);    //Convert image/matrix from RGB to HSV.
 
-    Mat HSV_StarterStackRegion = workingMatrix.submat(rowStart, rowEnd, colStart, colEnd);
+    Mat HSV_StarterStackRegion = HSV_Image.submat(rowStart, rowEnd, colStart, colEnd);
 
     HSV_Hue_C0 = Core.sumElems(HSV_StarterStackRegion).val[0];
     HSV_Saturation_C1 = Core.sumElems(HSV_StarterStackRegion).val[1];
@@ -84,7 +84,7 @@ public final Mat processFrame(Mat input) {
     ///////////////////////////  HLS  ///////////////////////////
     Imgproc.cvtColor(workingMatrix, HLS_Image, Imgproc.COLOR_RGB2HLS);    //Convert image/matrix from RGB to HLS.
 
-    Mat HLS_StarterStackRegion = workingMatrix.submat(rowStart, rowEnd, colStart, colEnd);
+    Mat HLS_StarterStackRegion = HLS_Image.submat(rowStart, rowEnd, colStart, colEnd);
 
     HLS_Hue_C0 = Core.sumElems(HLS_StarterStackRegion).val[0];
     HLS_Lightness_C1 = Core.sumElems(HLS_StarterStackRegion).val[1];
@@ -94,7 +94,7 @@ public final Mat processFrame(Mat input) {
     ///////////////////////////  CIELAB  ///////////////////////////
     Imgproc.cvtColor(workingMatrix, CIElab_Image, Imgproc.COLOR_RGB2Lab);    //Convert image/matrix from RGB to CIELAB.
 
-    Mat CIELAB_StarterStackRegion = workingMatrix.submat(rowStart, rowEnd, colStart, colEnd);
+    Mat CIELAB_StarterStackRegion = CIElab_Image.submat(rowStart, rowEnd, colStart, colEnd);
 
     CIELAB_Lightness_C0 = Core.sumElems(CIELAB_StarterStackRegion).val[0];
     CIELAB_A_Difference_C1 = Core.sumElems(CIELAB_StarterStackRegion).val[1];
@@ -104,11 +104,11 @@ public final Mat processFrame(Mat input) {
     ///////////////////////////  CIELUV  ///////////////////////////
     Imgproc.cvtColor(workingMatrix, CIEluv_Image, Imgproc.COLOR_RGB2Luv);    //Convert image/matrix from RGB to CIELUV.
 
-    Mat CIELUV_StarterStackRegion = workingMatrix.submat(190, 233, 170, 210);
+    Mat CIELUV_StarterStackRegion = CIEluv_Image.submat(rowStart, rowEnd, colStart, colEnd);
 
-    CIELUVg_Lightness_C0 = Core.sumElems(CIELUV_StarterStackRegion).val[0];
-    CIELUVg_U_Difference_C1 = Core.sumElems(CIELUV_StarterStackRegion).val[1];
-    CIELUVg_V_Difference_C2 = Core.sumElems(CIELUV_StarterStackRegion).val[2];
+    CIELUV_Lightness_C0 = Core.sumElems(CIELUV_StarterStackRegion).val[0];
+    CIELUV_U_Difference_C1 = Core.sumElems(CIELUV_StarterStackRegion).val[1];
+    CIELUV_V_Difference_C2 = Core.sumElems(CIELUV_StarterStackRegion).val[2];
 
 
     //Draw an on-screen rectangle around the region that we defined in the prior line.

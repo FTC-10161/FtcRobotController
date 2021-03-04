@@ -24,9 +24,9 @@ public class Camera_Test extends RobotOpMode {
 			A_Button = gamepad1.a;
 			B_Button = gamepad1.b;
 
-			if (A_Button && i < 14 && !isPressed) {
+			if (A_Button && i < 17 && !isPressed) {
 				i++;
-				isPressed = true;;
+				isPressed = true;
 			} else if (B_Button && i > 0 && !isPressed) {
 				i--;
 				isPressed = true;
@@ -99,6 +99,20 @@ public class Camera_Test extends RobotOpMode {
 					telemetry.addData("CIELAB B:         ", starter_stack_detector.CIELAB_B_Difference_C2);
 					telemetry.update();
 					break;
+
+				case 15:
+					telemetry.addData("CIELUV Lightness: ", starter_stack_detector.CIELUV_Lightness_C0);
+					telemetry.update();
+					break;
+				case 16:
+					telemetry.addData("CIELUV A:         ", starter_stack_detector.CIELUV_U_Difference_C1);
+					telemetry.update();
+					break;
+				case 17:
+					telemetry.addData("CIELUV B:         ", starter_stack_detector.CIELUV_V_Difference_C2);
+					telemetry.update();
+					break;
+
 				default:
 					telemetry.addLine("Error, no case found. Please tell Isaiah that he made a mistake.");
 			}
