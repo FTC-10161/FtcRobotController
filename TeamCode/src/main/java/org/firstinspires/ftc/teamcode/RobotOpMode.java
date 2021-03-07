@@ -28,6 +28,8 @@ public class RobotOpMode extends LinearOpMode {
     public OpenCvInternalCamera phoneCam;
     public Starter_Stack_Region_Color_Tester starter_stack_detector = new Starter_Stack_Region_Color_Tester();
 
+    int driveAngleOffset = 0;
+
     @Override
     public void runOpMode() {
 
@@ -145,7 +147,8 @@ public class RobotOpMode extends LinearOpMode {
         while (runtime.milliseconds() < (duration * 1000)) {
             Orientation angles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             this.imu.getPosition();
-            heading = angles.firstAngle;
+            heading = angles.firstAngle;                        //Measure angle from gyroscope
+            heading = heading + driveAngleOffset;               //Add drive offset to angle; used for driving when turned
             correction = heading / 100;
 
             telemetry.addData("angle", heading);
@@ -213,7 +216,8 @@ public class RobotOpMode extends LinearOpMode {
         while (abs(current_encoder_count) < (target_revolution_count * 1120)) {
             Orientation angles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             this.imu.getPosition();
-            heading = angles.firstAngle;
+            heading = angles.firstAngle;                        //Measure angle from gyroscope
+            heading = heading + driveAngleOffset;               //Add drive offset to angle; used for driving when turned
             correction = heading / 100;
 
             telemetry.addData("angle", heading);
@@ -260,6 +264,29 @@ public class RobotOpMode extends LinearOpMode {
         hardware.backRight.setPower(0);
         telemetry.addLine("Robot Stopped");
         telemetry.update();
+    }
+
+
+    //////////////////////////////////////////////////////////// GYRO DRIVE ORIENTATION CHANGE METHOD ////////////////////////////////////////////////////////////
+    public void gyroDriveOrientationChange(String orientation) {
+        switch (orientation) {
+            case "North":   //North is considered to be the robot's starting orientation.
+                driveAngleOffset = 0;
+                break;
+            case "East":
+                driveAngleOffset = 90;
+                break;
+            case "South":
+                driveAngleOffset = 180;
+                break;
+            case "West":
+                driveAngleOffset = -90;
+                break;
+            default:
+                telemetry.addLine("Invalid direction passed to gyroDriveOrientationChange");
+                telemetry.update();
+                break;
+        }
     }
 
 }
