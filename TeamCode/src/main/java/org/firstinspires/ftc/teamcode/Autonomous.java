@@ -30,15 +30,18 @@ public class Autonomous extends RobotOpMode {
         pause(1);
 
         if(StarterStackConfiguration == 'B') {
-            gyroEncoderDrive("forward", 40, 1.0);
+            gyroEncoderDrive("forward", 20, 0.5);
             pause(1);
-            gyroEncoderDrive("leftward", 80, 3.0);
+            gyroEncoderDrive("leftward", 50, 1.5);
+            gyroEncoderDrive("forward", 20, 0.5);
+            pause(1);
+            gyroEncoderDrive("leftward", 80, 1.5);
             gyroEncoderDrive("rightward", 80, 0.7);
         }
         else {
-            gyroEncoderDrive("forward", 40, 1.0);
+            gyroEncoderDrive("backwards", 40, 1.0);
             pause(1);
-            gyroEncoderDrive("leftward", 80, 3.0);
+            gyroEncoderDrive("leftward", 80, 1.5);
 
             if (StarterStackConfiguration == 'A') {
                 gyroEncoderDrive("rightward", 80, 0.7);
