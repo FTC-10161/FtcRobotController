@@ -30,7 +30,9 @@ public class Starter_Stack_Configuration_Detector extends OpenCvPipeline {
         int colEnd = 110;
 
 
-        Imgproc.cvtColor(workingMatrix, workingMatrix, Imgproc.COLOR_RGB2YCrCb);    //Convert image/matrix from RGB to YCrBc.
+        Imgproc.cvtColor(workingMatrix, workingMatrix, Imgproc.COLOR_RGB2HLS);    //Convert image/matrix from RGB to YCrBc.
+
+        rowsContainingRings = 0;
 
         for (int i = 0; i < 8; i++) {
             Mat starterStackRowMatrix = workingMatrix.submat(i * rowIncrement + rowStart, (i+1) * rowIncrement + rowStart, colStart, colEnd);
