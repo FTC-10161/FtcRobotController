@@ -26,7 +26,7 @@ public class RobotOpMode extends LinearOpMode {
     BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
     public OpenCvInternalCamera phoneCam;
-    public Starter_Stack_Region_Color_Tester starter_stack_detector = new Starter_Stack_Region_Color_Tester();
+    public Starter_Stack_Configuration_Detector starter_stack_detector = new Starter_Stack_Configuration_Detector();
 
     int driveAngleOffset = 0;
 
