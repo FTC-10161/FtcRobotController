@@ -48,8 +48,8 @@ public final Mat processFrame(Mat input) {
         return input;
     }
 
-    int rowStart = 130;
-    int rowEnd = 170;
+    int rowStart = 160;
+    int rowEnd = 165;
     int colStart = 70;
     int colEnd = 110;
 
