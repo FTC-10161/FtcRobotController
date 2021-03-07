@@ -165,7 +165,7 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             }
 
             if (translation > 0.2) {
-                calculester.translation.setPower(-0.5);
+                calculester.translation.setPower(-0.7);
             }
             else {
                 calculester.translation.setPower(0);
