@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name="Starter Stack Detection Test", group="ULTIMATE_GOAL")
 //@Disabled
-public class StarterStackDetectionTest extends RobotOpMode {
+public class Starter_Stack_Detection_Test extends RobotOpMode {
 
 
 	@Override
