@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="ULTIMATE_GOAL")
 //@Disabled
 public class Autonomous extends RobotOpMode {
@@ -9,14 +10,17 @@ public class Autonomous extends RobotOpMode {
     public void runOpMode() {
 
         hardwareInit();
+		int RowsExceedingRingDetectionThreshold;
         char StarterStackConfiguration;
 
         waitForStart();
+	
+	RowsExceedingRingDetectionThreshold = starter_stack_detector.rowsContainingRings;
 
-        if(starter_stack_detector.rowsContainingRings > 2) {
+        if(RowsExceedingRingDetectionThreshold > 2) {
             StarterStackConfiguration = 'C';
         }
-        else if (starter_stack_detector.rowsContainingRings > 0) {
+        else if (RowsExceedingRingDetectionThreshold > 0) {
             StarterStackConfiguration = 'B';
         }
         else {
@@ -45,11 +49,20 @@ public class Autonomous extends RobotOpMode {
 
             if (StarterStackConfiguration == 'A') {
                 gyroEncoderDrive("rightward", 80, 0.7);
+
+		gyroEncoderDrive("forward", 40, 2);
+		gyroEncoderDrive("leftward", 40, 2);
             }
             else {
                 gyroEncoderDrive("leftward", 40, 4.0);
                 gyroEncoderDrive("rightward", 40, 1.9);
             }
         }
+
+        
+	while(opModeIsActive()) {
+		telemetry.addData("Configuration ==", StarterStackConfiguration);
+		telemetry.update();
+	}
     }
 }
