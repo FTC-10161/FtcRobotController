@@ -30,7 +30,7 @@ public class Autonomous extends RobotOpMode {
 
         gyroEncoderDrive("backward", 40, 0.5);
         pause(1);
-        gyroEncoderDrive("leftward", 80, 2.25);
+        gyroEncoderDrive("leftward", 40, 2.25);
         pause(1);
 
         if(StarterStackConfiguration == 'B') {
@@ -39,8 +39,8 @@ public class Autonomous extends RobotOpMode {
             gyroEncoderDrive("leftward", 50, 1.5);
             gyroEncoderDrive("forward", 20, 0.5);
             pause(1);
-            gyroEncoderDrive("leftward", 80, 1.5);
-            gyroEncoderDrive("rightward", 80, 0.7);
+            gyroEncoderDrive("leftward", 40, 1.5);
+            gyroEncoderDrive("rightward", 40, 0.7);
         }
         else {
             gyroEncoderDrive("backward", 40, 0.5);
@@ -59,7 +59,7 @@ public class Autonomous extends RobotOpMode {
             }
         }
 
-        
+
 	while(opModeIsActive()) {
 		telemetry.addData("Configuration ==", StarterStackConfiguration);
 		telemetry.update();
