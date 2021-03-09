@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
@@ -52,7 +53,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
     /* Declare OpMode members. */
-    ULTIMATE_GOAL_HARDWARE_MAP calculester  = new ULTIMATE_GOAL_HARDWARE_MAP();   // Use a Pushbot's hardware
+    ULTIMATE_GOAL_HARDWARE_MAP calculester = new ULTIMATE_GOAL_HARDWARE_MAP();   // Use a Pushbot's hardware
 //                                                               // could also use HardwarePushbotMatrix class.
 
     @Override
@@ -60,10 +61,8 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
         double xDrive;
         double yDrive;
         double turn;
-        double driveSpeed = 0.5;
+        double driveSpeed;
         double translation;
-        boolean armBack;
-        boolean armFront;
 
 
 
@@ -84,93 +83,83 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             xDrive = gamepad1.right_stick_x;
             yDrive = gamepad1.right_stick_y;
             turn = gamepad1.left_stick_x;
-            armBack = gamepad1.b;
-            armFront = gamepad1.a;
             translation = gamepad1.right_trigger;
 
             // check bumpers of controller 1 in order to set drive speed
-            if (gamepad1.left_bumper)
-            {
+            if (gamepad1.left_bumper) {
                 driveSpeed = 0.2; //if left bumpers is pressed, then change drive speed to 20%
-            }
-            else if (gamepad1.right_bumper)
-            {
+            } else if (gamepad1.right_bumper) {
                 driveSpeed = 1.0; //if right bumpers is pressed, then change drive speed to 100%
-            }
-            else
-            {
-                driveSpeed = 0.5; //if neither bumpers is pressed, then change drive speed to 50%
+            } else {
+                driveSpeed = 0.7; //if neither bumpers is pressed, then change drive speed to 50%
             }
 
 
-
-            if (turn < -0.2)
-            {
+            if (turn < -0.2) {
                 calculester.frontLeft.setPower(-driveSpeed);  //If the left control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(-driveSpeed);   //20% right, the robot turns rightward.
                 calculester.frontRight.setPower(driveSpeed);
                 calculester.backRight.setPower(driveSpeed);
                 continue;
-            }
-            else if (turn > 0.2) {
+            } else if (turn > 0.2) {
                 calculester.frontLeft.setPower(driveSpeed);  //If the left control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(driveSpeed);   //20% left, the robot turns left.
                 calculester.frontRight.setPower(-driveSpeed);
                 calculester.backRight.setPower(-driveSpeed);
                 continue;
-            }
-            else if (yDrive < -0.3 || gamepad1.dpad_up)
-            {
+            } else if (yDrive < -0.3 || gamepad1.dpad_up) {
                 calculester.frontLeft.setPower(driveSpeed);  //If the right control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(driveSpeed);   //20% forward or the up Dpad is pressed, the robot drives forward.
                 calculester.frontRight.setPower(driveSpeed);
                 calculester.backRight.setPower(driveSpeed);
-            }
-            else if (yDrive > 0.3 || gamepad1.dpad_down)
-            {
+            } else if (yDrive > 0.3 || gamepad1.dpad_down) {
                 calculester.frontLeft.setPower(-driveSpeed);  //If the right control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(-driveSpeed);   //20% backward or the down Dpad is pressed, the robot drives backward.
                 calculester.frontRight.setPower(-driveSpeed);
                 calculester.backRight.setPower(-driveSpeed);
-            }
-            else if (xDrive > 0.2 || gamepad1.dpad_right)
-            {
+            } else if (xDrive > 0.2 || gamepad1.dpad_right) {
                 calculester.frontLeft.setPower(driveSpeed);  //If the right control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(-driveSpeed);   //20% right or the right Dpad is pressed, the robot drives right.
                 calculester.frontRight.setPower(-driveSpeed);
                 calculester.backRight.setPower(driveSpeed);
-            }
-            else if (xDrive < -0.2 || gamepad1.dpad_left)
-            {
+            } else if (xDrive < -0.2 || gamepad1.dpad_left) {
                 calculester.frontLeft.setPower(-driveSpeed);  //If the right control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(driveSpeed);   //20% left or the left Dpad is pressed, the robot drives left.
                 calculester.frontRight.setPower(driveSpeed);
                 calculester.backRight.setPower(-driveSpeed);
-            }
-            else {
+            } else {
                 calculester.frontLeft.setPower(0);  //If no drives sticks are pushed, the robot stops.
                 calculester.backLeft.setPower(0);
                 calculester.frontRight.setPower(0);
                 calculester.backRight.setPower(0);
             }
 
-            if (armBack) {
-                 calculester.wobbleGoalArm.setPower(driveSpeed);
+            if (gamepad1.a) {        //If a presently makes the arm move away from the starting configuration, then this is correct.
+                calculester.wobbleGoalArm.setTargetPosition(75);    //1260 == 1 revolution of arm
+                calculester.wobbleGoalArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                calculester.wobbleGoalArm.setPower(driveSpeed);
+            } else if (gamepad1.b) {
+                calculester.wobbleGoalArm.setTargetPosition(300);
+                calculester.wobbleGoalArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                calculester.wobbleGoalArm.setPower(driveSpeed);
+            } else if (gamepad1.x) {
+                calculester.wobbleGoalArm.setTargetPosition(500);
+                calculester.wobbleGoalArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                calculester.wobbleGoalArm.setPower(driveSpeed);
+            } else if (gamepad1.y) {
+                calculester.wobbleGoalArm.setTargetPosition(600);
+                calculester.wobbleGoalArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                calculester.wobbleGoalArm.setPower(driveSpeed);
             }
-            else if (armFront) {
-                calculester.wobbleGoalArm.setPower(-driveSpeed);
-            }
-            else {
-                calculester.wobbleGoalArm.setPower(0);
-            }
+
 
             if (translation > 0.2) {
                 calculester.translation.setPower(-0.7);
-            }
-            else {
+            } else {
                 calculester.translation.setPower(0);
             }
 
         }
     }
 }
+
