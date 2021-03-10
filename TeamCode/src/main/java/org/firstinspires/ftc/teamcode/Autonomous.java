@@ -50,12 +50,12 @@ public class Autonomous extends RobotOpMode {
             if (StarterStackConfiguration == 'A') {
                 gyroEncoderDrive("rightward", 80, 0.7);
 
-		gyroEncoderDrive("forward", 40, 2);
-		gyroEncoderDrive("leftward", 40, 2);
+		        gyroEncoderDrive("forward", 40, 2);
+	        	gyroEncoderDrive("leftward", 40, 1);
             }
             else {
-                gyroEncoderDrive("leftward", 40, 4.0);
-                gyroEncoderDrive("rightward", 40, 1.9);
+                gyroEncoderDrive("leftward", 40, 3.5);
+                gyroEncoderDrive("rightward", 40, 2.2);
             }
         }
 
