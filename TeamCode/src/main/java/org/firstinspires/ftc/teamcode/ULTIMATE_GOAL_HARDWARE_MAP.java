@@ -84,7 +84,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        wobbleGoalArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wobbleGoalArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         translation.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
