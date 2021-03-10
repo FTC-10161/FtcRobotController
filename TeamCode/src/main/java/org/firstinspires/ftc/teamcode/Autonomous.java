@@ -51,7 +51,7 @@ public class Autonomous extends RobotOpMode {
                 gyroEncoderDrive("rightward", 80, 0.7);
 
 		        gyroEncoderDrive("forward", 40, 2);
-	        	gyroEncoderDrive("leftward", 40, 1);
+	        	gyroEncoderDrive("leftward", 40, 1.3);
             }
             else {
                 gyroEncoderDrive("leftward", 40, 3.5);
