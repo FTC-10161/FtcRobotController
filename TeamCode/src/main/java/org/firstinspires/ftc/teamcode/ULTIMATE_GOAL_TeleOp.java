@@ -29,10 +29,11 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 
 /**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
@@ -155,6 +156,9 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.translation.setPower(0);
             }
 
+
+            telemetry.addData("cm", "%.2f cm", calculester.rearDistanceSensor.getDistance(DistanceUnit.CM));
+            telemetry.update();
         }
     }
 }
