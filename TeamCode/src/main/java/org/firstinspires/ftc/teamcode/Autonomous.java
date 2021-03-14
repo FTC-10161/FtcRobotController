@@ -16,7 +16,7 @@ public class Autonomous extends RobotOpMode {
         waitForStart();
 	
 	RowsExceedingRingDetectionThreshold = starter_stack_detector.rowsContainingRings;
-
+        pause(1);
         if(RowsExceedingRingDetectionThreshold > 2) {
             StarterStackConfiguration = 'C';
         }
