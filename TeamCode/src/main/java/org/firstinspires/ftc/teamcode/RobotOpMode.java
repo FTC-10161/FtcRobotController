@@ -212,8 +212,14 @@ public class RobotOpMode extends LinearOpMode {
 
         hardware.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hardware.frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        hardware.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        hardware.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        hardware.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        while (abs(current_encoder_count) < (target_revolution_count * 1120)) {
+        while (current_encoder_count < (target_revolution_count * 1120)) {
             Orientation angles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             this.imu.getPosition();
             heading = angles.firstAngle;                        //Measure angle from gyroscope
@@ -255,8 +261,13 @@ public class RobotOpMode extends LinearOpMode {
                     break;
             }
 
-            current_encoder_count = hardware.frontRight.getCurrentPosition();     //Store encoder position from one to the wheels
+            current_encoder_count = (   abs(hardware.frontRight.getCurrentPosition()) +
+                                        abs(hardware.frontLeft.getCurrentPosition()) +
+                                        abs(hardware.backRight.getCurrentPosition()) +
+                                        abs(hardware.backLeft.getCurrentPosition())
+                                    ) / 4.0;                                                  //Store encoder position as the average of the absolute value of all wheels
         }
+
         //Stop all motors
         hardware.frontLeft.setPower(0);
         hardware.backLeft.setPower(0);

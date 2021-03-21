@@ -12,19 +12,19 @@ public class Movement_Test extends RobotOpMode {
 
         hardwareInit();
 
-        gyroDriveOrientationChange("North");
+        //gyroDriveOrientationChange("North");
         gyroEncoderDrive("forward", 35, 4);
         pause(1);
 
-        gyroDriveOrientationChange("East");
+        //gyroDriveOrientationChange("East");
         gyroEncoderDrive("rightward", 35, 4);
         pause(1);
 
-        gyroDriveOrientationChange("South");
+        //gyroDriveOrientationChange("South");
         gyroEncoderDrive("backward", 35, 4);
         pause(1);
 
-        gyroDriveOrientationChange("West");
+        //gyroDriveOrientationChange("West");
         gyroEncoderDrive("leftward", 35, 4);
         pause(1);
     }
