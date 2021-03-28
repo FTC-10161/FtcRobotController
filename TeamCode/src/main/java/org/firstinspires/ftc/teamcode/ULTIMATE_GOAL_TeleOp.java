@@ -65,6 +65,7 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
         double turn;
         double driveSpeed;
         double translation;
+        double flywheel;
 
 
 
@@ -86,6 +87,7 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             yDrive = gamepad1.right_stick_y;
             turn = gamepad1.left_stick_x;
             translation = gamepad1.right_trigger;
+            flywheel = gamepad1.left_trigger;
 
             // check bumpers of controller 1 in order to set drive speed
             if (gamepad1.left_bumper) {
@@ -159,6 +161,12 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.translation.setPower(-0.7);
             } else {
                 calculester.translation.setPower(0);
+            }
+
+            if (flywheel > 0.2) {
+                calculester.flywheel.setPower(-1);
+            } else {
+                calculester.flywheel.setPower(0);
             }
 
 
