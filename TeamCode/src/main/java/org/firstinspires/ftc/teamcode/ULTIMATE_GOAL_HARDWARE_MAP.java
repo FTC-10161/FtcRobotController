@@ -48,6 +48,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
     public DcMotor translation = null;
 
     public ModernRoboticsI2cRangeSensor rearDistanceSensor = null;
+    public ModernRoboticsI2cRangeSensor rightDistanceSensor = null;
 
 
     /* local OpMode members. */
@@ -73,6 +74,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
         translation  = hwMap.get(DcMotor.class, "flywheel");
 
         rearDistanceSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "rear_distance_sensor");
+        rightDistanceSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "right_distance_sensor");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE); // Reverse direction of left drive motors.
         frontRight.setDirection(DcMotor.Direction.FORWARD);

@@ -8,6 +8,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -298,6 +299,53 @@ public class RobotOpMode extends LinearOpMode {
                 telemetry.update();
                 break;
         }
+    }
+
+
+
+    //////////////////////////////////////////////////////////// ABSOLUTE POSITION FUNCTION ////////////////////////////////////////////////////////////
+    public void findAbsolutePosition(double x_target, double y_target) {
+        double x_diff;
+        double y_diff;
+
+         do {
+            double x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
+            double y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
+
+            x_diff = x_target - x_current;
+            y_diff = y_target - y_current;
+
+            double frontLeftPower  = x_diff/12.0 - y_diff/12.0;
+            double backLeftPower   = x_diff/12.0 + y_diff/12.0;
+            double frontRightPower = x_diff/12.0 + y_diff/12.0;
+            double backRightPower  = x_diff/12.0 - y_diff/12.0;
+
+            if (frontLeftPower < 0.2) {
+                frontLeftPower = 0.2;
+            }
+            if (backLeftPower < 0.2) {
+                backLeftPower = 0.2;
+            }
+            if (frontRightPower < 0.2) {
+                frontRightPower = 0.2;
+            }
+            if (backRightPower < 0.2) {
+                backRightPower = 0.2;
+            }
+
+            hardware.frontLeft.setPower(frontLeftPower);
+            hardware.backLeft.setPower(backLeftPower);
+            hardware.frontRight.setPower(frontRightPower);
+            hardware.backRight.setPower(backRightPower);
+        } while(abs(x_diff) > 0.1 || abs(y_diff) > 0.1);
+
+        //Stop all motors
+        hardware.frontLeft.setPower(0);
+        hardware.backLeft.setPower(0);
+        hardware.frontRight.setPower(0);
+        hardware.backRight.setPower(0);
+        telemetry.addLine("Robot Stopped");
+        telemetry.update();
     }
 
 }
