@@ -171,6 +171,7 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
 
             telemetry.addData("cm", "%.2f cm", calculester.rearDistanceSensor.getDistance(DistanceUnit.CM));
+            telemetry.addData("cm", "%.2f cm", calculester.rightDistanceSensor.getDistance(DistanceUnit.CM));
             telemetry.update();
         }
     }
