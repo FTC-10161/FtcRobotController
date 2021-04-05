@@ -312,32 +312,38 @@ public class RobotOpMode extends LinearOpMode {
             double x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
             double y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
 
-            x_diff = x_target - x_current;
-            y_diff = y_target - y_current;
+            x_diff = (x_target - x_current) / 12.0;
+            y_diff = (y_target - y_current) / 12.0;
 
-            double frontLeftPower  = x_diff/12.0 - y_diff/12.0;
-            double backLeftPower   = x_diff/12.0 + y_diff/12.0;
-            double frontRightPower = x_diff/12.0 + y_diff/12.0;
-            double backRightPower  = x_diff/12.0 - y_diff/12.0;
+            double frontLeftPower  = x_diff - y_diff;
+            double backLeftPower   = x_diff + y_diff;
+            double frontRightPower = x_diff + y_diff;
+            double backRightPower  = x_diff - y_diff;
 
-            if (frontLeftPower < 0.2) {
-                frontLeftPower = 0.2;
-            }
-            if (backLeftPower < 0.2) {
-                backLeftPower = 0.2;
-            }
-            if (frontRightPower < 0.2) {
-                frontRightPower = 0.2;
-            }
-            if (backRightPower < 0.2) {
-                backRightPower = 0.2;
-            }
+
+//            if (frontLeftPower < 0.2) {
+//                frontLeftPower = 0.2;
+//            }
+//            if (backLeftPower < 0.2) {
+//                backLeftPower = 0.2;
+//            }
+//            if (frontRightPower < 0.2) {
+//                frontRightPower = 0.2;
+//            }
+//            if (backRightPower < 0.2) {
+//                backRightPower = 0.2;
+//            }
+
+             telemetry.addData("X diff :", x_diff);
+             telemetry.addData("Y diff :", y_diff);
+             telemetry.update();
+
 
             hardware.frontLeft.setPower(frontLeftPower);
             hardware.backLeft.setPower(backLeftPower);
             hardware.frontRight.setPower(frontRightPower);
             hardware.backRight.setPower(backRightPower);
-        } while(abs(x_diff) > 0.1 || abs(y_diff) > 0.1);
+        } while(abs(x_diff) > 1.0 || abs(y_diff) > 1.0);
 
         //Stop all motors
         hardware.frontLeft.setPower(0);
