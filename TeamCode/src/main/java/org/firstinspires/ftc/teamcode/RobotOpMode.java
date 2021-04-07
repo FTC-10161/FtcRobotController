@@ -312,8 +312,8 @@ public class RobotOpMode extends LinearOpMode {
             double x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
             double y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
 
-            x_diff = (x_target - x_current) / 12.0;
-            y_diff = (y_target - y_current) / 12.0;
+            x_diff = (x_target - x_current) / 6;
+            y_diff = (y_target - y_current) / 6;
 
             double frontLeftPower  = x_diff - y_diff;
             double backLeftPower   = x_diff + y_diff;
@@ -343,7 +343,7 @@ public class RobotOpMode extends LinearOpMode {
             hardware.backLeft.setPower(backLeftPower);
             hardware.frontRight.setPower(frontRightPower);
             hardware.backRight.setPower(backRightPower);
-        } while(abs(x_diff) > 1.0 || abs(y_diff) > 1.0);
+        } while(abs(x_diff) > 0.1 || abs(y_diff) > 0.1);
 
         //Stop all motors
         hardware.frontLeft.setPower(0);
