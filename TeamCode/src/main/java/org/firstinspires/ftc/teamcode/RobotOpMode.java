@@ -307,32 +307,39 @@ public class RobotOpMode extends LinearOpMode {
     public void findAbsolutePosition(double x_target, double y_target) {
         double x_diff;
         double y_diff;
+        double x_current;
+        double y_current;
+        double frontLeftPower;
+        double backLeftPower;
+        double frontRightPower;
+        double backRightPower;
 
          do {
-            double x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
-            double y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
+            x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
+            y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
 
             x_diff = (x_target - x_current) / 6;
             y_diff = (y_target - y_current) / 6;
 
-            double frontLeftPower  = x_diff - y_diff;
-            double backLeftPower   = x_diff + y_diff;
-            double frontRightPower = x_diff + y_diff;
-            double backRightPower  = x_diff - y_diff;
+            frontLeftPower  = x_diff - y_diff;
+            backLeftPower   = x_diff + y_diff;
+            frontRightPower = x_diff + y_diff;
+            backRightPower  = x_diff - y_diff;
 
 
-//            if (frontLeftPower < 0.2) {
-//                frontLeftPower = 0.2;
-//            }
-//            if (backLeftPower < 0.2) {
-//                backLeftPower = 0.2;
-//            }
-//            if (frontRightPower < 0.2) {
-//                frontRightPower = 0.2;
-//            }
-//            if (backRightPower < 0.2) {
-//                backRightPower = 0.2;
-//            }
+            if (frontLeftPower > 0.5  || backLeftPower > 0.5 || frontRightPower > 0.5 || backRightPower > 0.5) {
+                frontLeftPower  = frontLeftPower/2.0;
+                backLeftPower   = backLeftPower/2.0;
+                frontRightPower = frontRightPower/2.0;
+                backRightPower  = backRightPower/2.0;
+            }
+             if (abs(frontLeftPower) + abs(backLeftPower) + abs(frontRightPower) + abs(backRightPower) < 0.5) {
+                 frontLeftPower  = frontLeftPower*3.0;
+                 backLeftPower   = backLeftPower*3.0;
+                 frontRightPower = frontRightPower*3.0;
+                 backRightPower  = backRightPower*3.0;
+             }
+
 
              telemetry.addData("X diff :", x_diff);
              telemetry.addData("Y diff :", y_diff);
@@ -343,7 +350,7 @@ public class RobotOpMode extends LinearOpMode {
             hardware.backLeft.setPower(backLeftPower);
             hardware.frontRight.setPower(frontRightPower);
             hardware.backRight.setPower(backRightPower);
-        } while(abs(x_diff) > 0.1 || abs(y_diff) > 0.1);
+        } while(abs(x_diff) > 0.06 || abs(y_diff) > 0.06);
 
         //Stop all motors
         hardware.frontLeft.setPower(0);
