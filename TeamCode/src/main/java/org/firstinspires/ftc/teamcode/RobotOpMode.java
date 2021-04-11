@@ -462,4 +462,26 @@ public class RobotOpMode extends LinearOpMode {
         telemetry.update();
     }
 
+
+    //////////////////////////////////////////////////////////// STARTER STACK CONFIGURATION FUNCTION ////////////////////////////////////////////////////////////
+    public char starter_stack_configuration (double x_target, double y_target) {
+        int RowsExceedingRingDetectionThreshold;
+        char StarterStackConfiguration;
+
+        RowsExceedingRingDetectionThreshold = starter_stack_detector.numberOfTimesRingsDetected;
+        RowsExceedingRingDetectionThreshold += starter_stack_detector.numberOfTimesRingsDetected;
+        RowsExceedingRingDetectionThreshold += starter_stack_detector.numberOfTimesRingsDetected;   //Test the value three times and sum them
+
+        if(RowsExceedingRingDetectionThreshold > 30) {
+            StarterStackConfiguration = 'C';
+        }
+        else if (RowsExceedingRingDetectionThreshold > 5) {
+            StarterStackConfiguration = 'B';
+        }
+        else {
+            StarterStackConfiguration = 'A';
+        }
+
+        return StarterStackConfiguration;
+    }
 }
