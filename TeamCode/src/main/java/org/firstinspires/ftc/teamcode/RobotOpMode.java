@@ -464,7 +464,7 @@ public class RobotOpMode extends LinearOpMode {
 
 
     //////////////////////////////////////////////////////////// STARTER STACK CONFIGURATION FUNCTION ////////////////////////////////////////////////////////////
-    public char starter_stack_configuration (double x_target, double y_target) {
+    public char starter_stack_configuration () {
         int RowsExceedingRingDetectionThreshold;
         char StarterStackConfiguration;
 
