@@ -464,24 +464,24 @@ public class RobotOpMode extends LinearOpMode {
 
 
     //////////////////////////////////////////////////////////// STARTER STACK CONFIGURATION FUNCTION ////////////////////////////////////////////////////////////
-    public char starter_stack_configuration () {
+    public char starterStackConfiguration() {
         int RowsExceedingRingDetectionThreshold;
-        char StarterStackConfiguration;
+        char configuration;
 
         RowsExceedingRingDetectionThreshold = starter_stack_detector.numberOfTimesRingsDetected;
         RowsExceedingRingDetectionThreshold += starter_stack_detector.numberOfTimesRingsDetected;
         RowsExceedingRingDetectionThreshold += starter_stack_detector.numberOfTimesRingsDetected;   //Test the value three times and sum them
 
         if(RowsExceedingRingDetectionThreshold > 30) {
-            StarterStackConfiguration = 'C';
+            configuration = 'C';
         }
         else if (RowsExceedingRingDetectionThreshold > 5) {
-            StarterStackConfiguration = 'B';
+            configuration = 'B';
         }
         else {
-            StarterStackConfiguration = 'A';
+            configuration = 'A';
         }
 
-        return StarterStackConfiguration;
+        return configuration;
     }
 }
