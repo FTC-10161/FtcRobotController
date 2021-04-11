@@ -10,22 +10,11 @@ public class Autonomous extends RobotOpMode {
     public void runOpMode() {
 
         hardwareInit();
-		int RowsExceedingRingDetectionThreshold;
         char StarterStackConfiguration;
 
         waitForStart();
 	
-	RowsExceedingRingDetectionThreshold = starter_stack_detector.rowsContainingRings;
-        pause(1);
-        if(RowsExceedingRingDetectionThreshold > 2) {
-            StarterStackConfiguration = 'C';
-        }
-        else if (RowsExceedingRingDetectionThreshold > 0) {
-            StarterStackConfiguration = 'B';
-        }
-        else {
-            StarterStackConfiguration = 'A';
-        }
+	    StarterStackConfiguration = starter_stack_configuration();
 
 
         gyroEncoderDrive("backward", 40, 0.5);
