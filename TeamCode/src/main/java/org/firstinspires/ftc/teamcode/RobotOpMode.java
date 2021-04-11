@@ -109,6 +109,30 @@ public class RobotOpMode extends LinearOpMode {
                 hardware.frontRight.setPower(speed / 100);
                 hardware.backRight.setPower(-speed / 100);
                 break;
+            case "forward-right":
+                hardware.frontLeft.setPower(speed / 100);
+                hardware.backLeft.setPower(0);
+                hardware.frontRight.setPower(0);
+                hardware.backRight.setPower(speed / 100);
+                break;
+            case "forward-left":
+                hardware.frontLeft.setPower(0);
+                hardware.backLeft.setPower(speed / 100);
+                hardware.frontRight.setPower(speed / 100);
+                hardware.backRight.setPower(0);
+                break;
+            case "backward-right":
+                hardware.frontLeft.setPower(0);
+                hardware.backLeft.setPower(-speed / 100);
+                hardware.frontRight.setPower(-speed / 100);
+                hardware.backRight.setPower(0);
+                break;
+            case "backward-left":
+                hardware.frontLeft.setPower(-speed / 100);
+                hardware.backLeft.setPower(0);
+                hardware.frontRight.setPower(0);
+                hardware.backRight.setPower(-speed / 100);
+                break;
             default:                                 //If direction is not valid, says so via telemetry.
                 telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
                 telemetry.update();
@@ -181,6 +205,30 @@ public class RobotOpMode extends LinearOpMode {
                     hardware.frontRight.setPower((speed / 100) - correction);
                     hardware.backRight.setPower((-speed / 100) - correction);
                     break;
+                case "forward-right":
+                    hardware.frontLeft.setPower((speed / 100) + correction);
+                    hardware.backLeft.setPower((0) + correction);
+                    hardware.frontRight.setPower((0) - correction);
+                    hardware.backRight.setPower((speed / 100) - correction);
+                    break;
+                case "forward-left":
+                    hardware.frontLeft.setPower((0) + correction);
+                    hardware.backLeft.setPower((speed / 100) + correction);
+                    hardware.frontRight.setPower((speed / 100) - correction);
+                    hardware.backRight.setPower((0) - correction);
+                    break;
+                case "backward-right":
+                    hardware.frontLeft.setPower((0) + correction);
+                    hardware.backLeft.setPower((-speed / 100) + correction);
+                    hardware.frontRight.setPower((-speed / 100) - correction);
+                    hardware.backRight.setPower((0) - correction);
+                    break;
+                case "backward-left":
+                    hardware.frontLeft.setPower((-speed / 100) + correction);
+                    hardware.backLeft.setPower((0) + correction);
+                    hardware.frontRight.setPower((0) - correction);
+                    hardware.backRight.setPower((-speed / 100) - correction);
+                    break;
                 default:                                 //If direction is not valid, says so via telemetry.
                     telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
                     telemetry.update();
@@ -202,6 +250,7 @@ public class RobotOpMode extends LinearOpMode {
         double heading;
         double correction;
         double current_encoder_count = 0;
+        int angle = 0;
 
 
         //Make sure that speed value is a value between 0 and 100 inclusive. If not, say so via telemetry.
@@ -209,6 +258,26 @@ public class RobotOpMode extends LinearOpMode {
             telemetry.addData("Invalid speed value of", speed);
             telemetry.addLine(". Must be between 0 and 100 inclusive.");
             telemetry.update();
+        }
+
+        //Determine whether the robot will drove on an angle
+        switch (direction) {
+            case "forward":
+            case "backward":
+            case "rightward":
+            case "leftward":
+                angle = 4;
+                break;
+            case "forward-right":
+            case "forward-left":
+            case "backward-right":
+            case "backward-left":
+                angle = 2;
+                break;
+            default:                                 //If direction is not valid, says so via telemetry.
+                telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
+                telemetry.update();
+                break;
         }
 
         hardware.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -256,17 +325,49 @@ public class RobotOpMode extends LinearOpMode {
                     hardware.frontRight.setPower((speed / 100) - correction);
                     hardware.backRight.setPower((-speed / 100) - correction);
                     break;
+                case "forward-right":
+                    hardware.frontLeft.setPower((speed / 100) + correction);
+                    hardware.backLeft.setPower((0) + correction);
+                    hardware.frontRight.setPower((0) - correction);
+                    hardware.backRight.setPower((speed / 100) - correction);
+                    break;
+                case "forward-left":
+                    hardware.frontLeft.setPower((0) + correction);
+                    hardware.backLeft.setPower((speed / 100) + correction);
+                    hardware.frontRight.setPower((speed / 100) - correction);
+                    hardware.backRight.setPower((0) - correction);
+                    break;
+                case "backward-right":
+                    hardware.frontLeft.setPower((0) + correction);
+                    hardware.backLeft.setPower((-speed / 100) + correction);
+                    hardware.frontRight.setPower((-speed / 100) - correction);
+                    hardware.backRight.setPower((0) - correction);
+                    break;
+                case "backward-left":
+                    hardware.frontLeft.setPower((-speed / 100) + correction);
+                    hardware.backLeft.setPower((0) + correction);
+                    hardware.frontRight.setPower((0) - correction);
+                    hardware.backRight.setPower((-speed / 100) - correction);
+                    break;
                 default:                                 //If direction is not valid, says so via telemetry.
                     telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
                     telemetry.update();
                     break;
             }
 
-            current_encoder_count = (   abs(hardware.frontRight.getCurrentPosition()) +
-                                        abs(hardware.frontLeft.getCurrentPosition()) +
-                                        abs(hardware.backRight.getCurrentPosition()) +
-                                        abs(hardware.backLeft.getCurrentPosition())
-                                    ) / 4.0;                                                  //Store encoder position as the average of the absolute value of all wheels
+            if (angle == 4) {
+                current_encoder_count = (abs(hardware.frontRight.getCurrentPosition()) +
+                        abs(hardware.frontLeft.getCurrentPosition()) +
+                        abs(hardware.backRight.getCurrentPosition()) +
+                        abs(hardware.backLeft.getCurrentPosition())
+                ) / 4.0;                                                  //Store encoder position as the average of the absolute value of all wheels
+            } else if (angle == 2) {
+                current_encoder_count = (abs(hardware.frontRight.getCurrentPosition()) +
+                        abs(hardware.frontLeft.getCurrentPosition()) +
+                        abs(hardware.backRight.getCurrentPosition()) +
+                        abs(hardware.backLeft.getCurrentPosition())
+                ) / 2.0;                                                  //Store encoder position as the average of the absolute value of two wheels
+            }
         }
 
         //Stop all motors
