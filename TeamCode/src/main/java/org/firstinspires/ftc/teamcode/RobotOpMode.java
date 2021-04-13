@@ -343,7 +343,8 @@ public class RobotOpMode extends LinearOpMode {
             hardware.backLeft.setPower(backLeftPower);
             hardware.frontRight.setPower(frontRightPower);
             hardware.backRight.setPower(backRightPower);
-        } while(abs(x_diff) > 0.1 || abs(y_diff) > 0.1);
+        } while(abs(x_diff) > 0.1
+                 || abs(y_diff) > 0.1);
 
         //Stop all motors
         hardware.frontLeft.setPower(0);
