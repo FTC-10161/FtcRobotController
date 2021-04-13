@@ -39,7 +39,7 @@ public class Starter_Stack_Configuration_Detector extends OpenCvPipeline {
             starterStackRowMatrix = workingMatrix.submat(i * rowIncrement + rowStart, (i+1) * rowIncrement + rowStart, colStart, colEnd);
             nonStarterStackRowMatrix = workingMatrix.submat(i * rowIncrement + rowStart, (i+1) * rowIncrement + rowStart, colStart + 50, colEnd + 50);
 
-            if (Core.sumElems(starterStackRowMatrix).val[2] > (Core.sumElems(nonStarterStackRowMatrix).val[2] + 10000))
+            if (Core.sumElems(starterStackRowMatrix).val[2] > (Core.sumElems(nonStarterStackRowMatrix).val[2] + 2000))
                 numberOfTimesRingsDetected++;
 
             Imgproc.rectangle(workingMatrix, new Rect(colStart, i * rowIncrement + rowStart, colEnd - colStart, rowIncrement), new Scalar(0, 255, 0));
