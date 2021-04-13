@@ -109,6 +109,30 @@ public class RobotOpMode extends LinearOpMode {
                 hardware.frontRight.setPower(speed / 100);
                 hardware.backRight.setPower(-speed / 100);
                 break;
+            case "forward-right":
+                hardware.frontLeft.setPower(speed / 100);
+                hardware.backLeft.setPower(0);
+                hardware.frontRight.setPower(0);
+                hardware.backRight.setPower(speed / 100);
+                break;
+            case "forward-left":
+                hardware.frontLeft.setPower(0);
+                hardware.backLeft.setPower(speed / 100);
+                hardware.frontRight.setPower(speed / 100);
+                hardware.backRight.setPower(0);
+                break;
+            case "backward-right":
+                hardware.frontLeft.setPower(0);
+                hardware.backLeft.setPower(-speed / 100);
+                hardware.frontRight.setPower(-speed / 100);
+                hardware.backRight.setPower(0);
+                break;
+            case "backward-left":
+                hardware.frontLeft.setPower(-speed / 100);
+                hardware.backLeft.setPower(0);
+                hardware.frontRight.setPower(0);
+                hardware.backRight.setPower(-speed / 100);
+                break;
             default:                                 //If direction is not valid, says so via telemetry.
                 telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
                 telemetry.update();
@@ -181,6 +205,30 @@ public class RobotOpMode extends LinearOpMode {
                     hardware.frontRight.setPower((speed / 100) - correction);
                     hardware.backRight.setPower((-speed / 100) - correction);
                     break;
+                case "forward-right":
+                    hardware.frontLeft.setPower((speed / 100) + correction);
+                    hardware.backLeft.setPower((0) + correction);
+                    hardware.frontRight.setPower((0) - correction);
+                    hardware.backRight.setPower((speed / 100) - correction);
+                    break;
+                case "forward-left":
+                    hardware.frontLeft.setPower((0) + correction);
+                    hardware.backLeft.setPower((speed / 100) + correction);
+                    hardware.frontRight.setPower((speed / 100) - correction);
+                    hardware.backRight.setPower((0) - correction);
+                    break;
+                case "backward-right":
+                    hardware.frontLeft.setPower((0) + correction);
+                    hardware.backLeft.setPower((-speed / 100) + correction);
+                    hardware.frontRight.setPower((-speed / 100) - correction);
+                    hardware.backRight.setPower((0) - correction);
+                    break;
+                case "backward-left":
+                    hardware.frontLeft.setPower((-speed / 100) + correction);
+                    hardware.backLeft.setPower((0) + correction);
+                    hardware.frontRight.setPower((0) - correction);
+                    hardware.backRight.setPower((-speed / 100) - correction);
+                    break;
                 default:                                 //If direction is not valid, says so via telemetry.
                     telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
                     telemetry.update();
@@ -202,6 +250,7 @@ public class RobotOpMode extends LinearOpMode {
         double heading;
         double correction;
         double current_encoder_count = 0;
+        int angle = 0;
 
 
         //Make sure that speed value is a value between 0 and 100 inclusive. If not, say so via telemetry.
@@ -209,6 +258,26 @@ public class RobotOpMode extends LinearOpMode {
             telemetry.addData("Invalid speed value of", speed);
             telemetry.addLine(". Must be between 0 and 100 inclusive.");
             telemetry.update();
+        }
+
+        //Determine whether the robot will drove on an angle
+        switch (direction) {
+            case "forward":
+            case "backward":
+            case "rightward":
+            case "leftward":
+                angle = 4;
+                break;
+            case "forward-right":
+            case "forward-left":
+            case "backward-right":
+            case "backward-left":
+                angle = 2;
+                break;
+            default:                                 //If direction is not valid, says so via telemetry.
+                telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
+                telemetry.update();
+                break;
         }
 
         hardware.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -256,17 +325,49 @@ public class RobotOpMode extends LinearOpMode {
                     hardware.frontRight.setPower((speed / 100) - correction);
                     hardware.backRight.setPower((-speed / 100) - correction);
                     break;
+                case "forward-right":
+                    hardware.frontLeft.setPower((speed / 100) + correction);
+                    hardware.backLeft.setPower((0) + correction);
+                    hardware.frontRight.setPower((0) - correction);
+                    hardware.backRight.setPower((speed / 100) - correction);
+                    break;
+                case "forward-left":
+                    hardware.frontLeft.setPower((0) + correction);
+                    hardware.backLeft.setPower((speed / 100) + correction);
+                    hardware.frontRight.setPower((speed / 100) - correction);
+                    hardware.backRight.setPower((0) - correction);
+                    break;
+                case "backward-right":
+                    hardware.frontLeft.setPower((0) + correction);
+                    hardware.backLeft.setPower((-speed / 100) + correction);
+                    hardware.frontRight.setPower((-speed / 100) - correction);
+                    hardware.backRight.setPower((0) - correction);
+                    break;
+                case "backward-left":
+                    hardware.frontLeft.setPower((-speed / 100) + correction);
+                    hardware.backLeft.setPower((0) + correction);
+                    hardware.frontRight.setPower((0) - correction);
+                    hardware.backRight.setPower((-speed / 100) - correction);
+                    break;
                 default:                                 //If direction is not valid, says so via telemetry.
                     telemetry.addData("Invalid direction: ", direction, ". Must be forward, backward, leftward, or rightward.");
                     telemetry.update();
                     break;
             }
 
-            current_encoder_count = (   abs(hardware.frontRight.getCurrentPosition()) +
-                                        abs(hardware.frontLeft.getCurrentPosition()) +
-                                        abs(hardware.backRight.getCurrentPosition()) +
-                                        abs(hardware.backLeft.getCurrentPosition())
-                                    ) / 4.0;                                                  //Store encoder position as the average of the absolute value of all wheels
+            if (angle == 4) {
+                current_encoder_count = (abs(hardware.frontRight.getCurrentPosition()) +
+                        abs(hardware.frontLeft.getCurrentPosition()) +
+                        abs(hardware.backRight.getCurrentPosition()) +
+                        abs(hardware.backLeft.getCurrentPosition())
+                ) / 4.0;                                                  //Store encoder position as the average of the absolute value of all wheels
+            } else if (angle == 2) {
+                current_encoder_count = (abs(hardware.frontRight.getCurrentPosition()) +
+                        abs(hardware.frontLeft.getCurrentPosition()) +
+                        abs(hardware.backRight.getCurrentPosition()) +
+                        abs(hardware.backLeft.getCurrentPosition())
+                ) / 2.0;                                                  //Store encoder position as the average of the absolute value of two wheels
+            }
         }
 
         //Stop all motors
@@ -307,32 +408,39 @@ public class RobotOpMode extends LinearOpMode {
     public void findAbsolutePosition(double x_target, double y_target) {
         double x_diff;
         double y_diff;
+        double x_current;
+        double y_current;
+        double frontLeftPower;
+        double backLeftPower;
+        double frontRightPower;
+        double backRightPower;
 
          do {
-            double x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
-            double y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
+            x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
+            y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
 
             x_diff = (x_target - x_current) / 6;
             y_diff = (y_target - y_current) / 6;
 
-            double frontLeftPower  = x_diff - y_diff;
-            double backLeftPower   = x_diff + y_diff;
-            double frontRightPower = x_diff + y_diff;
-            double backRightPower  = x_diff - y_diff;
+            frontLeftPower  = x_diff - y_diff;
+            backLeftPower   = x_diff + y_diff;
+            frontRightPower = x_diff + y_diff;
+            backRightPower  = x_diff - y_diff;
 
 
-//            if (frontLeftPower < 0.2) {
-//                frontLeftPower = 0.2;
-//            }
-//            if (backLeftPower < 0.2) {
-//                backLeftPower = 0.2;
-//            }
-//            if (frontRightPower < 0.2) {
-//                frontRightPower = 0.2;
-//            }
-//            if (backRightPower < 0.2) {
-//                backRightPower = 0.2;
-//            }
+            if (frontLeftPower > 0.5  || backLeftPower > 0.5 || frontRightPower > 0.5 || backRightPower > 0.5) {
+                frontLeftPower  = frontLeftPower/2.0;
+                backLeftPower   = backLeftPower/2.0;
+                frontRightPower = frontRightPower/2.0;
+                backRightPower  = backRightPower/2.0;
+            }
+             if (abs(frontLeftPower) + abs(backLeftPower) + abs(frontRightPower) + abs(backRightPower) < 0.5) {
+                 frontLeftPower  = frontLeftPower*3.0;
+                 backLeftPower   = backLeftPower*3.0;
+                 frontRightPower = frontRightPower*3.0;
+                 backRightPower  = backRightPower*3.0;
+             }
+
 
              telemetry.addData("X diff :", x_diff);
              telemetry.addData("Y diff :", y_diff);
@@ -343,8 +451,7 @@ public class RobotOpMode extends LinearOpMode {
             hardware.backLeft.setPower(backLeftPower);
             hardware.frontRight.setPower(frontRightPower);
             hardware.backRight.setPower(backRightPower);
-        } while(abs(x_diff) > 0.1
-                 || abs(y_diff) > 0.1);
+        } while(abs(x_diff) > 0.06 || abs(y_diff) > 0.06);
 
         //Stop all motors
         hardware.frontLeft.setPower(0);
@@ -355,4 +462,26 @@ public class RobotOpMode extends LinearOpMode {
         telemetry.update();
     }
 
+
+    //////////////////////////////////////////////////////////// STARTER STACK CONFIGURATION FUNCTION ////////////////////////////////////////////////////////////
+    public char starterStackConfiguration() {
+        int RowsExceedingRingDetectionThreshold;
+        char configuration;
+
+        RowsExceedingRingDetectionThreshold = starter_stack_detector.numberOfTimesRingsDetected;
+        RowsExceedingRingDetectionThreshold += starter_stack_detector.numberOfTimesRingsDetected;
+        RowsExceedingRingDetectionThreshold += starter_stack_detector.numberOfTimesRingsDetected;   //Test the value three times and sum them
+
+        if(RowsExceedingRingDetectionThreshold > 30) {
+            configuration = 'C';
+        }
+        else if (RowsExceedingRingDetectionThreshold > 5) {
+            configuration = 'B';
+        }
+        else {
+            configuration = 'A';
+        }
+
+        return configuration;
+    }
 }

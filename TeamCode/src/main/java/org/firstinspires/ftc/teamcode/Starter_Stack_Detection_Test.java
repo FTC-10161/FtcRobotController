@@ -16,7 +16,7 @@ public class Starter_Stack_Detection_Test extends RobotOpMode {
 
 		while (opModeIsActive()) {
 
-					telemetry.addData("Number of rows", starter_stack_detector.rowsContainingRings);
+					telemetry.addData("Number of rows", starter_stack_detector.numberOfTimesRingsDetected);
 					telemetry.update();
 		}
 	}
