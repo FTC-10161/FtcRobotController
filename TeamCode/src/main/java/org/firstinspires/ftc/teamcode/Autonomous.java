@@ -17,32 +17,28 @@ public class Autonomous extends RobotOpMode {
 	    StarterStackConfiguration = starterStackConfiguration();
 
 
-        gyroEncoderDrive("backward", 40, 0.5);
-        pause(1);
-        gyroEncoderDrive("leftward", 40, 2.5);
-        pause(1);
+        gyroEncoderDrive("backward", 50, 0.5);
+        gyroEncoderDrive("leftward", 50, 2.5);
 
         if(StarterStackConfiguration == 'B') {
-            gyroEncoderDrive("leftward", 40, 0.75);
-            gyroEncoderDrive("forward-left", 20, 1);
-            pause(1);
-            gyroEncoderDrive("leftward", 40, 0.75);
-            gyroEncoderDrive("rightward", 40, 0.7);
+            gyroEncoderDrive("leftward", 50, 1);
+            gyroEncoderDrive("forward-left", 50, 1.5);
+            gyroEncoderDrive("leftward", 50, 0.75);
+            gyroEncoderDrive("rightward", 50, 0.7);
         }
         else {
-            gyroEncoderDrive("backward-left", 40, 1);
-            pause(1);
-            gyroEncoderDrive("leftward", 40, 0.75);
+            gyroEncoderDrive("backward-left", 50, 1.1);
+            gyroEncoderDrive("leftward", 50, 0.75);
 
             if (StarterStackConfiguration == 'A') {
                 gyroEncoderDrive("rightward", 80, 0.7);
 
-		        gyroEncoderDrive("forward", 40, 2);
-	        	gyroEncoderDrive("leftward", 40, 1.3);
+		        gyroEncoderDrive("forward", 50, 2);
+	        	gyroEncoderDrive("leftward", 50, 1.3);
             }
             else {
-                gyroEncoderDrive("leftward", 40, 3.5);
-                gyroEncoderDrive("rightward", 40, 2.2);
+                gyroEncoderDrive("leftward", 50, 3.5);
+                gyroEncoderDrive("rightward", 50, 2.2);
             }
         }
 
