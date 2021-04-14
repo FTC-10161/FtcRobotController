@@ -19,7 +19,7 @@ public class Autonomous extends RobotOpMode {
 
         gyroEncoderDrive("backward", 40, 0.5);
         pause(1);
-        gyroEncoderDrive("leftward", 40, 1.3);
+        gyroEncoderDrive("leftward", 40, 2);
         pause(1);
 
         if(StarterStackConfiguration == 'B') {

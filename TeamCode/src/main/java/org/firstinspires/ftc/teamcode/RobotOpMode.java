@@ -468,14 +468,17 @@ public class RobotOpMode extends LinearOpMode {
         int RowsExceedingRingDetectionThreshold;
         char configuration;
 
-        RowsExceedingRingDetectionThreshold = starter_stack_detector.numberOfTimesRingsDetected;
-        RowsExceedingRingDetectionThreshold += starter_stack_detector.numberOfTimesRingsDetected;
-        RowsExceedingRingDetectionThreshold += starter_stack_detector.numberOfTimesRingsDetected;   //Test the value three times and sum them
+        runtime.reset();
+        while (runtime.milliseconds() < 2000) {
+            RowsExceedingRingDetectionThreshold = starter_stack_detector.numberOfTimesRingsDetected;
+        }
 
-        if(RowsExceedingRingDetectionThreshold > 45) {
+        RowsExceedingRingDetectionThreshold = starter_stack_detector.numberOfTimesRingsDetected;
+
+        if(RowsExceedingRingDetectionThreshold > 15) {
             configuration = 'C';
         }
-        else if (RowsExceedingRingDetectionThreshold > 12) {
+        else if (RowsExceedingRingDetectionThreshold > 4) {
             configuration = 'B';
         }
         else {
@@ -484,6 +487,8 @@ public class RobotOpMode extends LinearOpMode {
         telemetry.addData("Rows above Threshold:", RowsExceedingRingDetectionThreshold);
         telemetry.update();
         pause(3);
+
+        runtime.reset();
         return configuration;
     }
 }
