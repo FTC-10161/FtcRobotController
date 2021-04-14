@@ -10,33 +10,30 @@ public class Autonomous extends RobotOpMode {
     public void runOpMode() {
 
         hardwareInit();
-        char starter_stack_configuration;
+        char StarterStackConfiguration;
 
         waitForStart();
 	
-	    starter_stack_configuration = starterStackConfiguration();
+	    StarterStackConfiguration = starterStackConfiguration();
 
 
         gyroEncoderDrive("backward", 40, 0.5);
         pause(1);
-        gyroEncoderDrive("leftward", 40, 2.25);
+        gyroEncoderDrive("leftward", 40, 1.3);
         pause(1);
 
-        if(starter_stack_configuration == 'B') {
-            gyroEncoderDrive("forward", 20, 0.5);
+        if(StarterStackConfiguration == 'B') {
+            gyroEncoderDrive("forward-left", 20, 2);
             pause(1);
-            gyroEncoderDrive("leftward", 50, 1.5);
-            gyroEncoderDrive("forward", 20, 0.5);
-            pause(1);
-            gyroEncoderDrive("leftward", 40, 1.5);
+            gyroEncoderDrive("leftward", 40, 3);
             gyroEncoderDrive("rightward", 40, 0.7);
         }
         else {
-            gyroEncoderDrive("backward", 40, 0.5);
+            gyroEncoderDrive("backward-left", 40, 1);
             pause(1);
-            gyroEncoderDrive("leftward", 40, 1.5);
+            gyroEncoderDrive("leftward", 40, 0.75);
 
-            if (starter_stack_configuration == 'A') {
+            if (StarterStackConfiguration == 'A') {
                 gyroEncoderDrive("rightward", 80, 0.7);
 
 		        gyroEncoderDrive("forward", 40, 2);
@@ -50,7 +47,7 @@ public class Autonomous extends RobotOpMode {
 
 
 	while(opModeIsActive()) {
-		telemetry.addData("Configuration ==", starter_stack_configuration);
+		telemetry.addData("Configuration ==", StarterStackConfiguration);
 		telemetry.update();
 	}
     }

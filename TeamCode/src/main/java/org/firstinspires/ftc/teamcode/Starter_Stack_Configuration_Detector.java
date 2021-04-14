@@ -43,7 +43,7 @@ public class Starter_Stack_Configuration_Detector extends OpenCvPipeline {
                 numberOfTimesRingsDetected++;
 
             Imgproc.rectangle(workingMatrix, new Rect(colStart, i * rowIncrement + rowStart, colEnd - colStart, rowIncrement), new Scalar(0, 255, 0));
-            Imgproc.rectangle(workingMatrix, new Rect(colStart + 50, i * rowIncrement + rowStart, colEnd - colStart, rowIncrement), new Scalar(0, 255, 0));
+            //Imgproc.rectangle(workingMatrix, new Rect(colStart + 50, i * rowIncrement + rowStart, colEnd - colStart, rowIncrement), new Scalar(0, 255, 0));
         }
 
 
