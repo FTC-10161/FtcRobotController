@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="ULTIMATE_GOAL")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="One Wobble Goal Autonomous", group="ULTIMATE_GOAL")
 //@Disabled
-public class Autonomous extends RobotOpMode {
+public class One_Wobble_Goal_Autonomous extends RobotOpMode {
 
     @Override
     public void runOpMode() {
