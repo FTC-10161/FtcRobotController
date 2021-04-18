@@ -138,7 +138,7 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.backRight.setPower(0);
             }
 
-            if (gamepad1.a) {        //If a presently makes the arm move away from the starting configuration, then this is correct.
+            if (gamepad1.a) {
                 calculester.wobbleGoalArm.setTargetPosition(-75);    //1260 == 1 revolution of arm
                 calculester.wobbleGoalArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 calculester.wobbleGoalArm.setPower(driveSpeed);
