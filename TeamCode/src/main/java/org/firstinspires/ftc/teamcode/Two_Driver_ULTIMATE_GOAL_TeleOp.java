@@ -91,7 +91,7 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             xDrive = gamepad1.right_stick_x;
             yDrive = gamepad1.right_stick_y;
             turn = gamepad1.left_stick_x;
-            translation = abs(gamepad2.right_stick_y);
+            translation = gamepad2.right_stick_y;
             flywheel = abs(gamepad2.left_stick_y);
 
 
@@ -110,13 +110,11 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.backLeft.setPower(-driveSpeed);   //20% right, the robot turns rightward.
                 calculester.frontRight.setPower(driveSpeed);
                 calculester.backRight.setPower(driveSpeed);
-                continue;
             } else if (turn > 0.2) {
                 calculester.frontLeft.setPower(driveSpeed);  //If the left control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(driveSpeed);   //20% left, the robot turns left.
                 calculester.frontRight.setPower(-driveSpeed);
                 calculester.backRight.setPower(-driveSpeed);
-                continue;
             } else if (yDrive < -0.3 || gamepad1.dpad_up) {
                 calculester.frontLeft.setPower(driveSpeed);  //If the right control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(driveSpeed);   //20% forward or the up Dpad is pressed, the robot drives forward.
@@ -144,18 +142,18 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.backRight.setPower(0);
             }
 
-            if (gamepad2.a) {
+            if (gamepad2.a || gamepad1.a) {
                 wobble_goal_arm_position = -75;
-            } else if (gamepad2.b) {
+            } else if (gamepad2.b || gamepad1.b) {
                 wobble_goal_arm_position = -1200;
-            } else if (gamepad2.x) {
+            } else if (gamepad2.x || gamepad1.x) {
                 wobble_goal_arm_position = -2200;
-            } else if (gamepad2.y) {
+            } else if (gamepad2.y || gamepad1.y) {
                 wobble_goal_arm_position = -2500;
             } else if (gamepad2.dpad_up) {
-                wobble_goal_arm_position = wobble_goal_arm_position + 5;
+                wobble_goal_arm_position = wobble_goal_arm_position + 15;
             } else if (gamepad2.dpad_down) {
-                wobble_goal_arm_position = wobble_goal_arm_position - 5;
+                wobble_goal_arm_position = wobble_goal_arm_position - 15;
             }
 
             calculester.wobbleGoalArm.setTargetPosition(wobble_goal_arm_position);
@@ -163,16 +161,18 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             calculester.wobbleGoalArm.setPower(driveSpeed);
 
 
-            if (translation > 0.2) {
-                calculester.translation.setPower(-0.7);
+            if (translation > 0.2 || translation < -0.2) {
+                calculester.translation.setPower(translation);
             } else {
                 calculester.translation.setPower(0);
             }
 
             if (flywheel > 0.2) {
-                calculester.flywheel.setPower(-1);
+                calculester.flywheel.setPower(-0.9);
+            } else if (flywheel < -0.2) {
+                calculester.flywheel.setPower(-1.0);
             } else {
-                calculester.flywheel.setPower(0);
+                    calculester.flywheel.setPower(0);
             }
 
 
@@ -182,4 +182,3 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
         }
     }
 }
-

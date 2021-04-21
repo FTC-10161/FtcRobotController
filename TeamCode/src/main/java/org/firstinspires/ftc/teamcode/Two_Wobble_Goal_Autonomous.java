@@ -28,11 +28,11 @@ public class Two_Wobble_Goal_Autonomous extends RobotOpMode {
             gyroEncoderDrive("rightward", 80, 0.7);
         }
         else {
-            gyroEncoderDrive("backward-left", 50, 1.1);
-            gyroEncoderDrive("leftward", 80, 0.75);
+            gyroEncoderDrive("backward-left", 50, 3.7);
+            gyroEncoderDrive("leftward", 80, 0.5);
 
             if (StarterStackConfiguration == 'A') {
-                gyroEncoderDrive("rightward", 80, 0.7);
+                gyroEncoderDrive("rightward", 80, 1.0);
             }
             else {
                 gyroEncoderDrive("leftward", 80, 3.5);
@@ -44,12 +44,14 @@ public class Two_Wobble_Goal_Autonomous extends RobotOpMode {
 
 
 
-        findAbsolutePosition(2, 2);
+        findAbsolutePosition(1.5, 1.5);
 
-        gyroTimeDrive("backward-right",50,  2.5);
+        gyroTimeDrive("backward-right",50,  3);
 
-        gyroEncoderDrive( "forward-left", 60,0.3);
-        gyroEncoderDrive( "forward", 80,4);
+        pause(1);
+
+        gyroEncoderDrive( "forward-left", 60,0.1);
+        gyroEncoderDrive( "forward", 80,1.2);
         gyroEncoderDrive( "backward-left", 80,4);
 
 

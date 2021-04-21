@@ -17,8 +17,8 @@ public class One_Wobble_Goal_Autonomous extends RobotOpMode {
 	    StarterStackConfiguration = starterStackConfiguration();
 
 
-        gyroEncoderDrive("backward", 50, 0.5);
-        gyroEncoderDrive("leftward", 50, 2.5);
+        gyroEncoderDrive("backward", 80, 0.2);
+        gyroEncoderDrive("leftward", 80, 3);
 
         if(StarterStackConfiguration == 'B') {
             gyroEncoderDrive("leftward", 50, 1);
@@ -27,8 +27,7 @@ public class One_Wobble_Goal_Autonomous extends RobotOpMode {
             gyroEncoderDrive("rightward", 50, 0.7);
         }
         else {
-            gyroEncoderDrive("backward-left", 50, 1.1);
-            gyroEncoderDrive("leftward", 50, 0.75);
+            gyroEncoderDrive("backward-left", 50, 2);
 
             if (StarterStackConfiguration == 'A') {
                 gyroEncoderDrive("rightward", 80, 0.7);
