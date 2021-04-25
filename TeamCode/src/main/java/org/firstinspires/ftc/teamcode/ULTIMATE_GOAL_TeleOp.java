@@ -156,13 +156,15 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.translation.setPower(0);
             }
 
-            if (gamepad1.right_stick_y > 0.2 || gamepad1.right_stick_y < -0.2) {
+            if (gamepad1.right_stick_y > 0.2) {
+                calculester.intake.setPower(-0.6);
+            } else if (gamepad1.right_stick_y < -0.2) {
                 calculester.intake.setPower(0.6);
             } else {
                 calculester.intake.setPower((0.0));
             }
 
-            if (gamepad1.left_trigger < 0.2) {
+            if (gamepad1.left_trigger > 0.2) {
                 calculester.flywheel.setPower(1.0);
             } else {
                 calculester.flywheel.setPower(0.0);
