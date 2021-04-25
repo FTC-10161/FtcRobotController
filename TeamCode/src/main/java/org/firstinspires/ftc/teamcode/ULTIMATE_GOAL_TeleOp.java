@@ -60,12 +60,10 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        double xDrive;
-        double yDrive;
         double turn;
         double driveSpeed;
         double translation;
-        double flywheel;
+
 
 
 
@@ -83,11 +81,8 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            xDrive = gamepad1.right_stick_x;
-            yDrive = gamepad1.right_stick_y;
             turn = gamepad1.left_stick_x;
-            translation = gamepad1.right_trigger;
-            flywheel = gamepad1.left_trigger;
+            translation = -gamepad1.right_trigger;
 
             // check bumpers of controller 1 in order to set drive speed
             if (gamepad1.left_bumper) {
@@ -104,29 +99,27 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.backLeft.setPower(-driveSpeed);   //20% right, the robot turns rightward.
                 calculester.frontRight.setPower(driveSpeed);
                 calculester.backRight.setPower(driveSpeed);
-                continue;
             } else if (turn > 0.2) {
                 calculester.frontLeft.setPower(driveSpeed);  //If the left control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(driveSpeed);   //20% left, the robot turns left.
                 calculester.frontRight.setPower(-driveSpeed);
                 calculester.backRight.setPower(-driveSpeed);
-                continue;
-            } else if (yDrive < -0.3 || gamepad1.dpad_up) {
+            } else if (gamepad1.dpad_up) {
                 calculester.frontLeft.setPower(driveSpeed);  //If the right control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(driveSpeed);   //20% forward or the up Dpad is pressed, the robot drives forward.
                 calculester.frontRight.setPower(driveSpeed);
                 calculester.backRight.setPower(driveSpeed);
-            } else if (yDrive > 0.3 || gamepad1.dpad_down) {
+            } else if (gamepad1.dpad_down) {
                 calculester.frontLeft.setPower(-driveSpeed);  //If the right control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(-driveSpeed);   //20% backward or the down Dpad is pressed, the robot drives backward.
                 calculester.frontRight.setPower(-driveSpeed);
                 calculester.backRight.setPower(-driveSpeed);
-            } else if (xDrive > 0.2 || gamepad1.dpad_right) {
+            } else if (gamepad1.dpad_right) {
                 calculester.frontLeft.setPower(driveSpeed);  //If the right control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(-driveSpeed);   //20% right or the right Dpad is pressed, the robot drives right.
                 calculester.frontRight.setPower(-driveSpeed);
                 calculester.backRight.setPower(driveSpeed);
-            } else if (xDrive < -0.2 || gamepad1.dpad_left) {
+            } else if (gamepad1.dpad_left) {
                 calculester.frontLeft.setPower(-driveSpeed);  //If the right control stick of gamepad1 is pushed more than
                 calculester.backLeft.setPower(driveSpeed);   //20% left or the left Dpad is pressed, the robot drives left.
                 calculester.frontRight.setPower(driveSpeed);
@@ -157,18 +150,23 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             }
 
 
-            if (translation > 0.2) {
-                calculester.translation.setPower(-0.7);
+            if (translation > 0.2 || translation < -0.2) {
+                calculester.translation.setPower(translation);
             } else {
                 calculester.translation.setPower(0);
             }
 
-            if (flywheel > 0.2) {
-                calculester.flywheel.setPower(-1);
+            if (gamepad1.right_stick_y > 0.2 || gamepad1.right_stick_y < -0.2) {
+                calculester.intake.setPower(0.6);
             } else {
-                calculester.flywheel.setPower(0);
+                calculester.intake.setPower((0.0));
             }
 
+            if (gamepad1.left_trigger < 0.2) {
+                calculester.flywheel.setPower(1.0);
+            } else {
+                calculester.flywheel.setPower(0.0);
+            }
 
             telemetry.addData("cm", "%.2f cm", calculester.rearDistanceSensor.getDistance(DistanceUnit.CM));
             telemetry.addData("cm", "%.2f cm", calculester.rightDistanceSensor.getDistance(DistanceUnit.CM));

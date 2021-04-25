@@ -47,6 +47,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
     public DcMotor wobbleGoalArm = null;
     public DcMotor translation = null;
     public DcMotor flywheel = null;
+    public DcMotor intake = null;
 
     public ModernRoboticsI2cRangeSensor rearDistanceSensor = null;
     public ModernRoboticsI2cRangeSensor rightDistanceSensor = null;
@@ -74,6 +75,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
         wobbleGoalArm  = hwMap.get(DcMotor.class, "wobble_goal_arm");
         translation = hwMap.get(DcMotor.class, "translation");
         flywheel  = hwMap.get(DcMotor.class, "flywheel");
+        intake  = hwMap.get(DcMotor.class, "intake");
 
         rearDistanceSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "rear_distance_sensor");
         rightDistanceSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "right_distance_sensor");
@@ -100,5 +102,6 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
         wobbleGoalArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         translation.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         flywheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 }
