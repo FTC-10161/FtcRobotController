@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="One Wobble Goal Autonomous", group="ULTIMATE_GOAL")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Ring Launch One Wobble Goal Autonomous", group="ULTIMATE_GOAL")
 //@Disabled
 public class Ring_Launch_One_Wobble_Goal_Autonomous extends RobotOpMode {
 
@@ -26,7 +26,7 @@ public class Ring_Launch_One_Wobble_Goal_Autonomous extends RobotOpMode {
             gyroEncoderDrive("leftward", 50, 0.75);
             gyroEncoderDrive("rightward", 50, 1.5);
             gyroDriveOrientationChange("East");
-            gyroEncoderDrive("leftward", 50, 1.5);
+            gyroEncoderDrive("leftward", 50, 0.5);
             launchRings();
             gyroEncoderDrive("backward", 80, 1.0);
         }
@@ -34,10 +34,10 @@ public class Ring_Launch_One_Wobble_Goal_Autonomous extends RobotOpMode {
             gyroEncoderDrive("backward-left", 50, 2);
 
             if (StarterStackConfiguration == 'A') {
-                gyroEncoderDrive("rightward", 80, 0.7);
+                gyroEncoderDrive("rightward", 80, 1.3);
                 gyroDriveOrientationChange("East");
-		        gyroEncoderDrive("leftward", 50, 2.5);
-	        	gyroEncoderDrive("backward", 50, 0.7);
+		        gyroEncoderDrive("leftward", 50, 1.5);
+//	        	gyroEncoderDrive("backward", 50, 0.2);
                 launchRings();
                 gyroEncoderDrive("backward", 80, 1.0);
             }
@@ -45,8 +45,8 @@ public class Ring_Launch_One_Wobble_Goal_Autonomous extends RobotOpMode {
                 gyroEncoderDrive("leftward", 50, 3.5);
                 gyroEncoderDrive("rightward", 80, 3.0);
                 gyroDriveOrientationChange("East");
-                gyroEncoderDrive("leftward", 50, 2.5);
-                gyroEncoderDrive("backward", 50, 0.7);
+                gyroEncoderDrive("leftward", 50, 1.5);
+//                gyroEncoderDrive("backward", 50, 0.2);
                 launchRings();
                 gyroEncoderDrive("backward", 80, 1.0);
             }

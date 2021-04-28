@@ -492,10 +492,10 @@ public class RobotOpMode extends LinearOpMode {
 
     //////////////////////////////////////////////////////////// LAUNCH RINGS FUNCTION ////////////////////////////////////////////////////////////
     public void launchRings() {
-        hardware.flywheel.setPower(1.0);
+        hardware.flywheel.setPower(-0.9);
         pause(1.0);
-        hardware.translation.setPower(0.4);
-        pause(1.5);
+        hardware.translation.setPower(-0.6);
+        pause(4);
         hardware.flywheel.setPower(0.0);
         hardware.translation.setPower(0.0);
     }
