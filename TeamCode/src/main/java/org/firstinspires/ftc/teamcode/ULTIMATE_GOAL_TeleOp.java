@@ -29,34 +29,21 @@
 
 package org.firstinspires.ftc.teamcode;
 
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-/**
- * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
- * All device access is managed through the HardwarePushbot class.
- * The code is structured as a LinearOpMode
- *
- * This particular OpMode executes a POV Game style Teleop for a PushBot
- * In this mode the left stick moves the robot FWD and back, the Right stick turns left and right.
- * It raises and lowers the claw using the Gampad Y and A buttons respectively.
- * It also opens and closes the claws slowly using the left and right Bumper buttons.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- */
+
 
 @TeleOp(name="ULTIMATE_GOAL_TeleOp", group="On_Season")
 //@Disabled
 public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
     /* Declare OpMode members. */
-    ULTIMATE_GOAL_HARDWARE_MAP calculester = new ULTIMATE_GOAL_HARDWARE_MAP();   // Use a Pushbot's hardware
-//                                                               // could also use HardwarePushbotMatrix class.
+    ULTIMATE_GOAL_HARDWARE_MAP calculester = new ULTIMATE_GOAL_HARDWARE_MAP();
 
     @Override
     public void runOpMode() {
@@ -64,12 +51,8 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
         double driveSpeed;
         double translation;
 
+        double speed = 0;
 
-
-
-        /* Initialize the hardware variables.
-         * The init() method of the hardware class does all the work here
-         */
         calculester.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
@@ -78,6 +61,10 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+
+        int prevPosition = calculester.flywheel.getCurrentPosition();
+        ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
+        timer.reset();
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -170,8 +157,17 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.flywheel.setPower(0.0);
             }
 
+            if (timer.time() > 100) {
+                speed = (double) (calculester.flywheel.getCurrentPosition() - prevPosition) / timer.time();
+                telemetry.update();
+                prevPosition = calculester.flywheel.getCurrentPosition();
+                timer.reset();
+            }
+
+
             telemetry.addData("cm", "%.2f cm", calculester.rearDistanceSensor.getDistance(DistanceUnit.CM));
             telemetry.addData("cm", "%.2f cm", calculester.rightDistanceSensor.getDistance(DistanceUnit.CM));
+            telemetry.addData("Flywheel RPM: ", speed/8);
             telemetry.update();
         }
     }
