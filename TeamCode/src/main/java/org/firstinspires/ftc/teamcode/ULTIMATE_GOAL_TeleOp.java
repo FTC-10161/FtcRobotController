@@ -158,16 +158,16 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             }
 
             if (timer.time() > 100) {
-                speed = (double) (calculester.flywheel.getCurrentPosition() - prevPosition) / timer.time();
+                speed = (double) (-calculester.flywheel.getCurrentPosition() - prevPosition) / timer.time();
                 telemetry.update();
-                prevPosition = calculester.flywheel.getCurrentPosition();
+                prevPosition = -calculester.flywheel.getCurrentPosition();
                 timer.reset();
             }
 
 
-            telemetry.addData("cm", "%.2f cm", calculester.rearDistanceSensor.getDistance(DistanceUnit.CM));
-            telemetry.addData("cm", "%.2f cm", calculester.rightDistanceSensor.getDistance(DistanceUnit.CM));
-            telemetry.addData("Flywheel RPM: ", speed/8);
+            //telemetry.addData("cm", "%.2f cm", calculester.rearDistanceSensor.getDistance(DistanceUnit.CM));
+            //telemetry.addData("cm", "%.2f cm", calculester.rightDistanceSensor.getDistance(DistanceUnit.CM));
+            telemetry.addData("Flywheel RPM: ", ((speed/28)) * 60000);
             telemetry.update();
         }
     }
