@@ -141,13 +141,19 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
                 if (endEffectorGateState == 0.1) {
                     endEffectorGateState = 0.6;
-                } else if (endEffectorGateState == 0.6) {
+                } else {
                     endEffectorGateState = 0.1;
                 }
                 calculester.endEffector.setPosition(endEffectorGateState);
 
-            } else if (!gamepad1.x) {
+                telemetry.addLine("Case One");
+                telemetry.update();
+
+            } else if (!gamepad1.x && xButtonPreviousState) {
                 xButtonPreviousState = false;
+
+                telemetry.addLine("Case Two");
+                telemetry.update();
             }
 
 

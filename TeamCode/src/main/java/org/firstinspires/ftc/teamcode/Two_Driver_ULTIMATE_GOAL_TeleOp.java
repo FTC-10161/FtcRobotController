@@ -59,16 +59,20 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
     /* Declare OpMode members. */
     ULTIMATE_GOAL_HARDWARE_MAP calculester = new ULTIMATE_GOAL_HARDWARE_MAP();   // Use a Pushbot's hardware
-//                                                               // could also use HardwarePushbotMatrix class.
+
+    double xDrive;
+    double yDrive;
+    double turn;
+    double driveSpeed;
+    double translation;
+    double flywheel;
+
+    double endEffectorGateState = 0.1;
+    boolean xButtonPreviousState = false;                                            // could also use HardwarePushbotMatrix class.
 
     @Override
     public void runOpMode() {
-        double xDrive;
-        double yDrive;
-        double turn;
-        double driveSpeed;
-        double translation;
-        double flywheel;
+
 
         int wobble_goal_arm_position = 0;
 
@@ -146,8 +150,6 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 wobble_goal_arm_position = -75;
             } else if (gamepad2.b || gamepad1.b) {
                 wobble_goal_arm_position = -1200;
-            } else if (gamepad2.x || gamepad1.x) {
-                wobble_goal_arm_position = -2200;
             } else if (gamepad2.y || gamepad1.y) {
                 wobble_goal_arm_position = -2500;
             } else if (gamepad2.dpad_up) {
@@ -173,6 +175,21 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.flywheel.setPower(-1.0);
             } else {
                     calculester.flywheel.setPower(0);
+            }
+
+
+            if ((gamepad1.x || gamepad2.x) && !xButtonPreviousState) {
+                xButtonPreviousState = true;
+
+                if (endEffectorGateState == 0.1) {
+                    endEffectorGateState = 0.6;
+                } else {
+                    endEffectorGateState = 0.1;
+                }
+                calculester.endEffector.setPosition(endEffectorGateState);
+
+            } else if (!gamepad1.x && !gamepad2.x && xButtonPreviousState) {
+                xButtonPreviousState = false;
             }
 
 

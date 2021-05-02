@@ -492,6 +492,15 @@ public class RobotOpMode extends LinearOpMode {
 
     //////////////////////////////////////////////////////////// LAUNCH RINGS FUNCTION ////////////////////////////////////////////////////////////
     public void launchRings() {
+        hardware.flywheel.setPower(-0.95);
+        pause(2.0);
+        hardware.translation.setPower(-0.6);
+        pause(0.4);
+        hardware.flywheel.setPower(0);
+        hardware.translation.setPower(0);
+
+
+        /*
         double measured_speed = 0;
         double power = 1.0;
 
@@ -509,30 +518,35 @@ public class RobotOpMode extends LinearOpMode {
             //Measure flywheel speed and store its value in measured_speed
             if (timer.milliseconds() > 100) {
                 measured_speed = (double) (hardware.flywheel.getCurrentPosition() - prevPosition) / timer.time();
-                telemetry.update();
                 prevPosition = hardware.flywheel.getCurrentPosition();
                 timer.reset();
             }
 
             //Run translation ramp when flywheel speed is within threshold
-            if (4800 < measured_speed && measured_speed < 5200) {
+            if (-5200 < measured_speed && measured_speed < -4800) {
                 hardware.translation.setPower(-0.6);
             }
             //Turn translation ramp off if flywheel is below threshold, and increase flywheel speed if it is not already at 100%
-            else if (measured_speed < 4800 && power <= 1.0) {
-                hardware.translation.setPower(0.0);
-                power = power + 0.1;
-            }
-            //Turn translation ramp off if flywheel is above threshold, and decrease flywheel speed if it is not already at 0%
-            else if (measured_speed > 5200 && power >= 0.0) {
+            else if (measured_speed > -4800 && power >= -1.0) {
                 hardware.translation.setPower(0.0);
                 power = power - 0.1;
             }
+            //Turn translation ramp off if flywheel is above threshold, and decrease flywheel speed if it is not already at 0%
+            else if (measured_speed < -5200 && power <= 0.0) {
+                hardware.translation.setPower(0.0);
+                power = power + 0.1;
+            }
+
+            telemetry.addData("-4800 < Target < -5200:  ", measured_speed);
+            telemetry.update();
+
         }
 
         //Turn of motors and reset runtime
         hardware.flywheel.setPower(0.0);
         hardware.translation.setPower(0.0);
         runtime.reset();
+
+         */
     }
 }
