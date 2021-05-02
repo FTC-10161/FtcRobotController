@@ -45,11 +45,15 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
     /* Declare OpMode members. */
     ULTIMATE_GOAL_HARDWARE_MAP calculester = new ULTIMATE_GOAL_HARDWARE_MAP();
 
+    double turn;
+    double driveSpeed;
+    double translation;
+    double endEffectorGateState = 0.1;
+    boolean xButtonPreviousState = false;
+
     @Override
     public void runOpMode() {
-        double turn;
-        double driveSpeed;
-        double translation;
+
 
         double speed = 0;
 
@@ -126,14 +130,24 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
                 calculester.wobbleGoalArm.setTargetPosition(-1200);
                 calculester.wobbleGoalArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 calculester.wobbleGoalArm.setPower(driveSpeed);
-            } else if (gamepad1.x) {
-                calculester.wobbleGoalArm.setTargetPosition(-2200);
-                calculester.wobbleGoalArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                calculester.wobbleGoalArm.setPower(driveSpeed);
             } else if (gamepad1.y) {
                 calculester.wobbleGoalArm.setTargetPosition(-2500);
                 calculester.wobbleGoalArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 calculester.wobbleGoalArm.setPower(driveSpeed);
+            }
+
+            if (gamepad1.x && !xButtonPreviousState) {
+                xButtonPreviousState = true;
+
+                if (endEffectorGateState == 0.1) {
+                    endEffectorGateState = 0.6;
+                } else if (endEffectorGateState == 0.6) {
+                    endEffectorGateState = 0.1;
+                }
+                calculester.endEffector.setPosition(endEffectorGateState);
+
+            } else if (!gamepad1.x) {
+                xButtonPreviousState = false;
             }
 
 
@@ -159,7 +173,6 @@ public class ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
             if (timer.time() > 100) {
                 speed = (double) (-calculester.flywheel.getCurrentPosition() - prevPosition) / timer.time();
-                telemetry.update();
                 prevPosition = -calculester.flywheel.getCurrentPosition();
                 timer.reset();
             }

@@ -34,6 +34,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 //import org.firstinspires.ftc.robotcontroller.external.samples.SensorMRRangeSensor;
 import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
@@ -48,6 +50,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
     public DcMotor translation = null;
     public DcMotor flywheel = null;
     public DcMotor intake = null;
+    public Servo endEffector = null;
 
     public ModernRoboticsI2cRangeSensor rearDistanceSensor = null;
     public ModernRoboticsI2cRangeSensor rightDistanceSensor = null;
@@ -76,6 +79,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
         translation = hwMap.get(DcMotor.class, "translation");
         flywheel  = hwMap.get(DcMotor.class, "flywheel");
         intake  = hwMap.get(DcMotor.class, "intake");
+        endEffector = hwMap.get(Servo.class, "end_effector");
 
         rearDistanceSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "rear_distance_sensor");
         rightDistanceSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "right_distance_sensor");
