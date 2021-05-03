@@ -64,8 +64,6 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
     double yDrive;
     double turn;
     double driveSpeed;
-    double translation;
-    double flywheel;
 
     double endEffectorGateState = 0.1;
     boolean xButtonPreviousState = false;                                            // could also use HardwarePushbotMatrix class.
@@ -95,11 +93,7 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             xDrive = gamepad1.right_stick_x;
             yDrive = gamepad1.right_stick_y;
             turn = gamepad1.left_stick_x;
-            translation = gamepad2.right_stick_y;
-            flywheel = abs(gamepad2.left_stick_y);
 
-
-            // check bumpers of controller 1 in order to set drive speed
             if (gamepad1.left_bumper) {
                 driveSpeed = 0.2; //if left bumpers is pressed, then change drive speed to 20%
             } else if (gamepad1.right_bumper) {
@@ -163,17 +157,26 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             calculester.wobbleGoalArm.setPower(driveSpeed);
 
 
-            if (translation > 0.2 || translation < -0.2) {
-                calculester.translation.setPower(translation);
+            if (gamepad2.right_stick_y > 0.2 || gamepad2.right_stick_y < -0.2) {
+                calculester.translation.setPower(gamepad2.right_stick_y);
             } else {
                 calculester.translation.setPower(0);
             }
 
-            if (flywheel > 0.2) {
-                calculester.flywheel.setPower(-0.9);
-            } else if (flywheel < -0.2) {
+            if (gamepad2.left_stick_y > 0.2) {
+                calculester.intake.setPower(-1.0);
+            }
+            else if (gamepad2.left_stick_y < -0.2) {
+                 calculester.intake.setPower(0.2);
+            }
+            else {
+                calculester.intake.setPower(0);
+            }
+
+            if (gamepad2.right_trigger > 0.2) {
                 calculester.flywheel.setPower(-1.0);
-            } else {
+            }
+            else {
                     calculester.flywheel.setPower(0);
             }
 
