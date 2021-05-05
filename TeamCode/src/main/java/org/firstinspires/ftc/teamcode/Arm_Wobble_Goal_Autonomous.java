@@ -4,7 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Ring Launch One Wobble Goal Autonomous", group="ULTIMATE_GOAL")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Arm Wobble Goal Autonomous", group="ULTIMATE_GOAL")
 @Disabled
 public class Arm_Wobble_Goal_Autonomous extends RobotOpMode {
 
