@@ -26,7 +26,7 @@ public class Ring_Launch_One_Wobble_Goal_Autonomous extends RobotOpMode {
             gyroEncoderDrive("leftward", 50, 0.75);
             gyroEncoderDrive("rightward", 50, 2.0);
             gyroDriveOrientationChange("East");
-            gyroEncoderDrive("leftward", 50, 1.0);
+            gyroEncoderDrive("leftward", 50, 0.29);
             gyroEncoderDrive("forward", 50, 0.8);
             gyroEncoderDrive("backward", 50, 0.6);
             launchRings();
@@ -41,7 +41,7 @@ public class Ring_Launch_One_Wobble_Goal_Autonomous extends RobotOpMode {
                 gyroEncoderDrive("leftward", 50, 1.5);
 //	        	gyroEncoderDrive("backward", 50, 0.2);
                 launchRings();
-                gyroEncoderDrive("backward", 80, 1.0);
+                gyroEncoderDrive("backward", 80, 1.5);
             }
             else {
                 gyroEncoderDrive("leftward", 50, 3.5);

@@ -495,9 +495,12 @@ public class RobotOpMode extends LinearOpMode {
         hardware.flywheel.setPower(-0.95);
         pause(2.0);
         hardware.translation.setPower(-0.6);
-        pause(4.0);
+        pause(3.0);
+        hardware.ringPusher.setPosition(0.1);
+        pause(1.0);
         hardware.flywheel.setPower(0);
         hardware.translation.setPower(0);
+        hardware.ringPusher.setPosition(0.9);
 
 
         /*

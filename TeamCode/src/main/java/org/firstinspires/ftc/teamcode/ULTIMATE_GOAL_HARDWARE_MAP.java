@@ -51,6 +51,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
     public DcMotor flywheel = null;
     public DcMotor intake = null;
     public Servo endEffector = null;
+    public Servo ringPusher = null;
 
     public ModernRoboticsI2cRangeSensor rearDistanceSensor = null;
     public ModernRoboticsI2cRangeSensor rightDistanceSensor = null;
@@ -80,6 +81,7 @@ public class ULTIMATE_GOAL_HARDWARE_MAP
         flywheel  = hwMap.get(DcMotor.class, "flywheel");
         intake  = hwMap.get(DcMotor.class, "intake");
         endEffector = hwMap.get(Servo.class, "end_effector");
+        ringPusher = hwMap.get(Servo.class, "ring_pusher");
 
         rearDistanceSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "rear_distance_sensor");
         rightDistanceSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "right_distance_sensor");

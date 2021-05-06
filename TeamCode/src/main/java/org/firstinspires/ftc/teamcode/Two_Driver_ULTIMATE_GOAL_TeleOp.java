@@ -66,7 +66,10 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
     double driveSpeed;
 
     double endEffectorGateState = 0.1;
-    boolean xButtonPreviousState = false;                                            // could also use HardwarePushbotMatrix class.
+    boolean xButtonPreviousState = false;
+
+    double ringPusherState = 0.9;
+    boolean leftBumperPreviousState = false;
 
     @Override
     public void runOpMode() {
@@ -94,12 +97,12 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             yDrive = gamepad1.right_stick_y;
             turn = gamepad1.left_stick_x;
 
-            if (gamepad1.left_bumper) {
-                driveSpeed = 0.2; //if left bumpers is pressed, then change drive speed to 20%
-            } else if (gamepad1.right_bumper) {
-                driveSpeed = 1.0; //if right bumpers is pressed, then change drive speed to 100%
+            if (gamepad1.left_trigger > 0.2 || gamepad2.left_bumper) {
+                driveSpeed = 0.2;
+            } else if (gamepad1.right_trigger > 0.2) {
+                driveSpeed = 1.0;
             } else {
-                driveSpeed = 0.7; //if neither bumpers is pressed, then change drive speed to 50%
+                driveSpeed = 0.7;
             }
 
 
@@ -176,6 +179,9 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             if (gamepad2.right_trigger > 0.2) {
                 calculester.flywheel.setPower(-1.0);
             }
+            else if (gamepad2.left_trigger > 0.2) {
+                calculester.flywheel.setPower(-0.8);
+            }
             else {
                     calculester.flywheel.setPower(0);
             }
@@ -193,6 +199,21 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
 
             } else if (!gamepad1.x && !gamepad2.x && xButtonPreviousState) {
                 xButtonPreviousState = false;
+            }
+
+
+            if (gamepad2.dpad_left) {
+                leftBumperPreviousState = true;
+
+                if (ringPusherState == 0.1) {
+                    ringPusherState = 0.9;
+                } else {
+                    ringPusherState = 0.1;
+                }
+                calculester.ringPusher.setPosition(ringPusherState);
+
+            } else if (!gamepad2.left_bumper && leftBumperPreviousState) {
+                leftBumperPreviousState = false;
             }
 
 
