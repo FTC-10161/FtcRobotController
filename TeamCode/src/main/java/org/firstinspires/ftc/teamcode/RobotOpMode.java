@@ -17,6 +17,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
 import static java.lang.Math.abs;
+import static java.lang.Math.log;
 
 
 public class RobotOpMode extends LinearOpMode {
@@ -415,43 +416,46 @@ public class RobotOpMode extends LinearOpMode {
         double frontRightPower;
         double backRightPower;
 
-         do {
-            x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
-            y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH) / 12.0;
+        do {
+            x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH);     //Read distances in inches
+            y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH);
 
-            x_diff = (x_target - x_current) / 6;
-            y_diff = (y_target - y_current) / 6;
+            x_target = x_target / 12;                                                     //Convert feet to inches
+            // y_target = y_target/12;
 
-            frontLeftPower  = x_diff - y_diff;
-            backLeftPower   = x_diff + y_diff;
+            x_diff = log(x_target - x_current);
+            y_diff = log(y_target - y_current);
+
+            frontLeftPower = x_diff - y_diff;
+            backLeftPower = x_diff + y_diff;
             frontRightPower = x_diff + y_diff;
-            backRightPower  = x_diff - y_diff;
+            backRightPower = x_diff - y_diff;
 
 
-            if (frontLeftPower > 0.5  || backLeftPower > 0.5 || frontRightPower > 0.5 || backRightPower > 0.5) {
-                frontLeftPower  = frontLeftPower/2.0;
-                backLeftPower   = backLeftPower/2.0;
-                frontRightPower = frontRightPower/2.0;
-                backRightPower  = backRightPower/2.0;
+            while (abs(frontLeftPower) > 0.75 || abs(backLeftPower) > 0.75 || abs(frontRightPower) > 0.75 || abs(backRightPower) > 0.75) {
+                frontLeftPower = frontLeftPower / 1.2;                                   //Reduce power values to below 0.75
+                backLeftPower = backLeftPower / 1.2;
+                frontRightPower = frontRightPower / 1.2;
+                backRightPower = backRightPower / 1.2;
             }
-             if (abs(frontLeftPower) + abs(backLeftPower) + abs(frontRightPower) + abs(backRightPower) < 0.5) {
-                 frontLeftPower  = frontLeftPower*3.0;
-                 backLeftPower   = backLeftPower*3.0;
-                 frontRightPower = frontRightPower*3.0;
-                 backRightPower  = backRightPower*3.0;
-             }
+            while (abs(frontLeftPower) + abs(backLeftPower) + abs(frontRightPower) + abs(backRightPower) < 0.5) {
+                frontLeftPower = frontLeftPower * 1.2;
+                backLeftPower = backLeftPower * 1.2;
+                frontRightPower = frontRightPower * 1.2;
+                backRightPower = backRightPower * 1.2;
+            }
 
 
-             telemetry.addData("X diff :", x_diff);
-             telemetry.addData("Y diff :", y_diff);
-             telemetry.update();
+            telemetry.addData("X diff :", x_diff);
+            telemetry.addData("Y diff :", y_diff);
+            telemetry.update();
 
 
             hardware.frontLeft.setPower(frontLeftPower);
             hardware.backLeft.setPower(backLeftPower);
             hardware.frontRight.setPower(frontRightPower);
             hardware.backRight.setPower(backRightPower);
-        } while(abs(x_diff) > 0.06 || abs(y_diff) > 0.06);
+        } while (abs(x_diff) > 2.0 || abs(y_diff) > 2.0);
 
         //Stop all motors
         hardware.frontLeft.setPower(0);
