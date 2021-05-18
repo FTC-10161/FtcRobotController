@@ -420,11 +420,12 @@ public class RobotOpMode extends LinearOpMode {
             x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH);     //Read distances in inches
             y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH);
 
-            //x_target = x_target / 12;                                                     //Convert feet to inches
-            // y_target = y_target/12;
-
             x_diff = (x_target * 12) - x_current;
             y_diff = (y_target * 12) - y_current;
+            
+            if (x_current > 125 || y_current > 125) {
+                continue;
+            }
 
             frontLeftPower = (x_diff - y_diff);
             backLeftPower = (x_diff + y_diff);
