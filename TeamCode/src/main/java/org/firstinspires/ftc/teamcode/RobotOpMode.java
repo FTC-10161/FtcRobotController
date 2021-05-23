@@ -518,7 +518,7 @@ public class RobotOpMode extends LinearOpMode {
     //////////////////////////////////////////////////////////// RUN FLYWHEEL FUNCTION ////////////////////////////////////////////////////////////
     public void launchRings(double targetRotationNumber) {
         double measured_speed = 0;
-        double power = 1.0;
+        double power = -1.0;
 
         hardware.translation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hardware.translation.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -531,7 +531,7 @@ public class RobotOpMode extends LinearOpMode {
         //Run method until the translation ramp run a specific distance
         while (hardware.translation.getCurrentPosition() > -targetRotationNumber*288) {
             //Measure flywheel speed and store its value in measured_speed
-            if (timer.milliseconds() > 100) {
+            if (timer.milliseconds() > 300) {
                 measured_speed = (double) (hardware.flywheel.getCurrentPosition() - prevPosition) / timer.time();
                 prevPosition = hardware.flywheel.getCurrentPosition();
                 timer.reset();
@@ -544,17 +544,18 @@ public class RobotOpMode extends LinearOpMode {
             //Turn translation ramp off if flywheel is below threshold, and increase flywheel speed if it is not already at 100%
             else if (measured_speed > -1800 && power >= -1.0) {
                 hardware.translation.setPower(0.0);
-                power = power - 0.04;
+                power = power - 0.001;
             }
             //Turn translation ramp off if flywheel is above threshold, and decrease flywheel speed if it is not already at 0%
             else if (measured_speed < -2000 && power <= 0.0) {
                 hardware.translation.setPower(0.0);
-                power = power + 0.04;
+                power = power + 0.001;
             }
 
             hardware.flywheel.setPower(power);
 
             //telemetry.addData("-4800 < Target < -5200:  ", measured_speed);
+            telemetry.addData("Tranlation", hardware.translation.getCurrentPosition());
             telemetry.addData("-2000 < Target < -1800:  ", measured_speed);
             telemetry.update();
         }
