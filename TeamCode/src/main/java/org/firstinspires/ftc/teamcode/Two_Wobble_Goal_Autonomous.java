@@ -18,68 +18,67 @@ public class Two_Wobble_Goal_Autonomous extends RobotOpMode {
         StarterStackConfiguration = starterStackConfiguration();
 
 
-        gyroEncoderDrive("backward", 80, 0.5);
-        gyroEncoderDrive("leftward", 80, 2.5);
+        gyroEncoderDrive("backward", 80, 0.2);
+        gyroEncoderDrive("leftward", 80, 3);
 
         if(StarterStackConfiguration == 'B') {
             gyroEncoderDrive("leftward", 80, 1);
-            gyroEncoderDrive("forward-left", 50, 1.5);
+            gyroEncoderDrive("forward-left", 80, 1.5);
             gyroEncoderDrive("leftward", 80, 0.75);
-            gyroEncoderDrive("rightward", 80, 0.7);
+            gyroEncoderDrive("rightward", 50, 0.7);
         }
         else {
-            gyroEncoderDrive("backward-left", 50, 3.7);
-            gyroEncoderDrive("leftward", 80, 0.5);
-
-            if (StarterStackConfiguration == 'A') {
-                gyroEncoderDrive("rightward", 80, 1.0);
-            }
-            else {
-                gyroEncoderDrive("leftward", 80, 3.5);
-                gyroEncoderDrive("rightward", 80, 2.2);
-            }
-        }
-
-
-
-
-
-        findAbsolutePosition(1.5, 1.5);
-
-        gyroTimeDrive("backward-right",50,  3);
-
-        pause(1);
-
-        gyroEncoderDrive( "forward-left", 60,0.1);
-        gyroEncoderDrive( "forward", 80,1.2);
-        gyroEncoderDrive( "backward-left", 80,4);
-
-
-
-
-
-        if(StarterStackConfiguration == 'B') {
-            gyroEncoderDrive("leftward", 80, 1);
-            gyroEncoderDrive("forward-left", 50, 1.5);
-            gyroEncoderDrive("leftward", 80, 0.75);
-            gyroEncoderDrive("rightward", 80, 0.7);
-        }
-        else {
-            gyroEncoderDrive("backward-left", 50, 1.1);
-            gyroEncoderDrive("leftward", 80, 0.75);
+            gyroEncoderDrive("backward-left", 80, 2);
 
             if (StarterStackConfiguration == 'A') {
                 gyroEncoderDrive("rightward", 80, 0.7);
             }
             else {
-                gyroEncoderDrive("leftward", 80, 3.5);
-                gyroEncoderDrive("rightward", 80, 2.2);
+                gyroEncoderDrive("leftward", 80, 3.2);
             }
         }
 
-        while(opModeIsActive()) {
-            telemetry.addData("Configuration ==", StarterStackConfiguration);
-            telemetry.update();
+       gyroEncoderDrive("rightward", 80, 3);
+       gyroEncoderDrive("forward", 80, 1);
+       findAbsolutePosition(0.25,0.25);
+       gyroEncoderDrive("forward", 50 ,2.3);
+
+
+        if(StarterStackConfiguration == 'B') {
+            gyroEncoderDrive("leftward", 80, 1);
+            gyroEncoderDrive("leftward", 80, 2);
+            gyroEncoderDrive("backward-left", 80, 1.75);
+            gyroEncoderDrive("leftward", 80, 1);
+
+            gyroEncoderDrive("rightward", 50, 2.0);
+            gyroDriveOrientationChange("East");
+            gyroEncoderDrive("leftward", 50, 0.29);
+            gyroEncoderDrive("forward", 50, 0.8);
+            gyroEncoderDrive("backward", 50, 0.6);
+            launchThreeRings();
+            gyroEncoderDrive("backward", 80, 1.0);
+        }
+        else {
+            gyroEncoderDrive("backward-left", 80, 5);
+
+            if (StarterStackConfiguration == 'A') {
+                gyroEncoderDrive("leftward", 80, 0.5);
+
+                gyroEncoderDrive("rightward", 80, 1.3);
+                gyroDriveOrientationChange("East");
+                gyroEncoderDrive("leftward", 50, 1.7);
+                launchThreeRings();
+                gyroEncoderDrive("backward", 80, 1.7);
+            }
+            else {
+                gyroEncoderDrive("leftward", 80, 3.7);
+
+                gyroEncoderDrive("rightward", 80, 4.2);
+                gyroDriveOrientationChange("East");
+                gyroEncoderDrive("leftward", 50, 1.7);
+                launchThreeRings();
+                gyroEncoderDrive("backward", 80, 1.0);
+            }
         }
     }
 }
