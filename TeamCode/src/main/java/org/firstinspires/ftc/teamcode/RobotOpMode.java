@@ -426,9 +426,15 @@ public class RobotOpMode extends LinearOpMode {
             correction = heading / 100;
             telemetry.addData("angle", heading);
 
-	    
-            x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH);     //Read distances in inches
-            y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH);
+            x_current = 0;
+            y_current = 0;
+
+            for(int i=0; i<4; i++) {
+                x_current = x_current + hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH);     //Read distances in inches
+                y_current = y_current + hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH);
+            }
+            x_current = x_current/5;
+            y_current = y_current/5;
 
             x_diff = (x_target * 12) - x_current;
             y_diff = (y_target * 12) - y_current;
