@@ -17,7 +17,6 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
 import static java.lang.Math.abs;
-import static java.lang.Math.log;
 
 
 public class RobotOpMode extends LinearOpMode {
@@ -407,6 +406,9 @@ public class RobotOpMode extends LinearOpMode {
 
     //////////////////////////////////////////////////////////// ABSOLUTE POSITION FUNCTION ////////////////////////////////////////////////////////////
     public void findAbsolutePosition(double x_target, double y_target) {
+        double heading;
+        double correction;
+
         double x_diff;
         double y_diff;
         double x_current;
@@ -417,6 +419,14 @@ public class RobotOpMode extends LinearOpMode {
         double backRightPower;
 
         do {
+	        Orientation angles = this.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            this.imu.getPosition();
+            heading = angles.firstAngle;                        //Measure angle from gyroscope
+            heading = heading + driveAngleOffset;               //Add drive offset to angle; used for driving when turned
+            correction = heading / 100;
+            telemetry.addData("angle", heading);
+
+	    
             x_current = hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH);     //Read distances in inches
             y_current = hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH);
 
@@ -446,6 +456,10 @@ public class RobotOpMode extends LinearOpMode {
                 backRightPower = backRightPower * 1.2;
             }
 
+                frontLeftPower = frontLeftPower + correction;
+                backLeftPower = backLeftPower + correction;
+                frontRightPower = frontRightPower - correction;
+                backRightPower = backRightPower - correction;
 
             telemetry.addData("X diff :", x_diff);
             telemetry.addData("Y diff :", y_diff);
