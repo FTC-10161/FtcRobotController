@@ -433,7 +433,7 @@ public class RobotOpMode extends LinearOpMode {
             x_diff = (x_target * 12) - x_current;
             y_diff = (y_target * 12) - y_current;
             
-            if (x_current > 125 || y_current > 125) {
+            if (x_current > 180 || y_current > 180) {
                 continue;
             }
 
