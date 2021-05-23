@@ -509,7 +509,7 @@ public class RobotOpMode extends LinearOpMode {
         int prevPosition = hardware.flywheel.getCurrentPosition();
 
         //Run method until the translation ramp run a specific distance
-        while (hardware.translation.getCurrentPosition() < -targetRotationNumber*288) {
+        while (hardware.translation.getCurrentPosition() > -targetRotationNumber*288) {
             //Measure flywheel speed and store its value in measured_speed
             if (timer.milliseconds() > 100) {
                 measured_speed = (double) (hardware.flywheel.getCurrentPosition() - prevPosition) / timer.time();
@@ -531,13 +531,13 @@ public class RobotOpMode extends LinearOpMode {
                 hardware.translation.setPower(0.0);
                 power = power + 0.04;
             }
+
+            hardware.flywheel.setPower(power);
+
+            //telemetry.addData("-4800 < Target < -5200:  ", measured_speed);
+            telemetry.addData("-2000 < Target < -1800:  ", measured_speed);
+            telemetry.update();
         }
-
-        hardware.flywheel.setPower(power);
-
-        //telemetry.addData("-4800 < Target < -5200:  ", measured_speed);
-        telemetry.addData("-2000 < Target < -1800:  ", measured_speed);
-        telemetry.update();
     }
 
 
@@ -561,10 +561,5 @@ public class RobotOpMode extends LinearOpMode {
         hardware.flywheel.setPower(0);
         hardware.translation.setPower(0);
         hardware.ringPusher.setPosition(0.9);
-
-        //Turn of motors and reset runtime
-        hardware.flywheel.setPower(0.0);
-        hardware.translation.setPower(0.0);
-        runtime.reset();
     }
 }
