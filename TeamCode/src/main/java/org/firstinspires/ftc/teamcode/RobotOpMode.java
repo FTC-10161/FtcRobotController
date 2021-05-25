@@ -17,6 +17,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
 import static java.lang.Math.abs;
+import static java.lang.Double.isNaN;
 
 
 public class RobotOpMode extends LinearOpMode {
@@ -429,7 +430,7 @@ public class RobotOpMode extends LinearOpMode {
             x_current = 0;
             y_current = 0;
 
-            for(int i=0; i<4; i++) {
+            for(int i=0; i<=4; i++) {
                 x_current = x_current + hardware.rearDistanceSensor.getDistance(DistanceUnit.INCH);     //Read distances in inches
                 y_current = y_current + hardware.rightDistanceSensor.getDistance(DistanceUnit.INCH);
             }
@@ -438,6 +439,11 @@ public class RobotOpMode extends LinearOpMode {
 
             x_diff = (x_target * 12) - x_current;
             y_diff = (y_target * 12) - y_current;
+
+            if (isNaN(x_current) || isNaN(y_current)) {
+                gyroEncoderDrive("forward-left", 50, 0.1);
+                continue;
+            }
             
             if (x_current > 180 || y_current > 180) {
                 continue;
@@ -555,7 +561,7 @@ public class RobotOpMode extends LinearOpMode {
             hardware.flywheel.setPower(power);
 
             //telemetry.addData("-4800 < Target < -5200:  ", measured_speed);
-            telemetry.addData("Tranlation", hardware.translation.getCurrentPosition());
+            telemetry.addData("Translation", hardware.translation.getCurrentPosition());
             telemetry.addData("-2000 < Target < -1800:  ", measured_speed);
             telemetry.update();
         }
