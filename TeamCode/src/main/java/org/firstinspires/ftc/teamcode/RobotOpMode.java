@@ -440,8 +440,12 @@ public class RobotOpMode extends LinearOpMode {
             x_diff = (x_target * 12) - x_current;
             y_diff = (y_target * 12) - y_current;
 
-            if (isNaN(x_current) || isNaN(y_current)) {
-                gyroEncoderDrive("forward-left", 50, 0.1);
+            if (isNaN(x_current)) {
+                gyroEncoderDrive("forward", 100, 0.1);
+                continue;
+            }
+            if (isNaN(y_current)) {
+                gyroEncoderDrive("leftward", 100, 0.1);
                 continue;
             }
             
