@@ -38,7 +38,7 @@ public class Arm_Wobble_Goal_Autonomous extends RobotOpMode {
             hardware.endEffector.setPosition(0.1);
             gyroDriveOrientationChange("East");
             gyroEncoderDrive("leftward", 50, 0.5);
-            launchThreeRings();
+            launchRings();
             gyroEncoderDrive("backward", 80, 1.0);
         }
         else {
@@ -58,7 +58,7 @@ public class Arm_Wobble_Goal_Autonomous extends RobotOpMode {
                 hardware.endEffector.setPosition(0.1);
                 gyroDriveOrientationChange("East");
 		        gyroEncoderDrive("leftward", 50, 1.5);
-                launchThreeRings();
+                launchRings();
                 gyroEncoderDrive("backward", 80, 1.0);
             }
             else {
@@ -76,7 +76,7 @@ public class Arm_Wobble_Goal_Autonomous extends RobotOpMode {
                 gyroDriveOrientationChange("East");
                 gyroEncoderDrive("leftward", 50, 1.5);
 //                gyroEncoderDrive("backward", 50, 0.2);
-                launchThreeRings();
+                launchRings();
                 gyroEncoderDrive("backward", 80, 1.0);
             }
         }
