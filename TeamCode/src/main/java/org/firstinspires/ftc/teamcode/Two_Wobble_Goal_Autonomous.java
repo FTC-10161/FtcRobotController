@@ -29,7 +29,6 @@ public class Two_Wobble_Goal_Autonomous extends RobotOpMode {
             //Launch Rings
             gyroEncoderDrive("rightward", 100, 2.4);
             gyroDriveOrientationChange("East");
-            gyroEncoderDrive("leftward", 60, 0.2);
             gyroEncoderDrive("forward", 60, 0.8);
             gyroEncoderDrive("backward", 40, 0.6);
             launchRings();
@@ -50,10 +49,10 @@ public class Two_Wobble_Goal_Autonomous extends RobotOpMode {
                 gyroEncoderDrive("leftward", 80, 2.8);
 
                 //Launch Rings
-                gyroEncoderDrive("forward-right", 100, 0.1);
-                gyroEncoderDrive("rightward", 100, 4.1);
+                gyroEncoderDrive("forward-right", 40, 0.3);
+                gyroEncoderDrive("rightward", 100, 4.0);
                 gyroDriveOrientationChange("East");
-                gyroEncoderDrive("leftward", 60, 1.7);
+                gyroEncoderDrive("leftward", 50, 1.5);
                 launchRings();
                 gyroEncoderDrive("rightward", 100, 0.4);
                 gyroEncoderDrive("backward-right", 100, 0.3);
