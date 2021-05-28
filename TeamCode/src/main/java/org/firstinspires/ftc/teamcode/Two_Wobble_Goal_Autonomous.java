@@ -22,21 +22,21 @@ public class Two_Wobble_Goal_Autonomous extends RobotOpMode {
         gyroEncoderDrive("leftward", 80, 3);
 
         if(StarterStackConfiguration == 'B') {
-            gyroEncoderDrive("leftward", 80, 1);
-            gyroEncoderDrive("forward-left", 80, 1.5);
-            gyroEncoderDrive("leftward", 80, 0.75);
-            gyroEncoderDrive("rightward", 50, 0.7);
+            gyroEncoderDrive("leftward", 100, 1);
+            gyroEncoderDrive("forward-left", 100, 1.5);
+            gyroEncoderDrive("leftward", 100, 0.75);
 
             //Launch Rings
-            gyroEncoderDrive("rightward", 50, 2.0);
+            gyroEncoderDrive("rightward", 100, 2.4);
             gyroDriveOrientationChange("East");
-            gyroEncoderDrive("leftward", 50, 0.29);
-            gyroEncoderDrive("forward", 50, 0.8);
-            gyroEncoderDrive("backward", 50, 0.6);
+            gyroEncoderDrive("leftward", 60, 0.2);
+            gyroEncoderDrive("forward", 60, 0.8);
+            gyroEncoderDrive("backward", 40, 0.6);
             launchRings();
         }
         else {
             gyroEncoderDrive("backward-left", 80, 2);
+            gyroEncoderDrive("leftward", 80, 0.1);
 
             if (StarterStackConfiguration == 'A') {
 
@@ -47,28 +47,30 @@ public class Two_Wobble_Goal_Autonomous extends RobotOpMode {
                 launchRings();
             }
             else {
-                gyroEncoderDrive("leftward", 80, 3.2);
+                gyroEncoderDrive("leftward", 80, 2.8);
 
                 //Launch Rings
-                gyroEncoderDrive("rightward", 100, 4.2);
+                gyroEncoderDrive("forward-right", 100, 0.1);
+                gyroEncoderDrive("rightward", 100, 4.1);
                 gyroDriveOrientationChange("East");
-                gyroEncoderDrive("leftward", 100, 1.7);
+                gyroEncoderDrive("leftward", 60, 1.7);
                 launchRings();
+                gyroEncoderDrive("rightward", 100, 0.4);
+                gyroEncoderDrive("backward-right", 100, 0.3);
             }
         }
 
         gyroDriveOrientationChange("North");
-        gyroEncoderDrive("forward", 50, 0.75);
-        gyroEncoderDrive("backward-right", 50, 1.5);
+        gyroEncoderDrive("forward", 60, 0.75);
+        gyroEncoderDrive("backward-right", 60, 1.5);
         findAbsolutePosition(0.5,0.25);
-        gyroEncoderDrive("forward", 50 ,2.1);
+        gyroEncoderDrive("forward-right", 50 ,0.2);
+        gyroEncoderDrive("forward", 50 ,2.0);
 
 
         if(StarterStackConfiguration == 'B') {
-            gyroEncoderDrive("leftward", 80, 1);
-            gyroEncoderDrive("leftward", 80, 2);
+            gyroEncoderDrive("leftward", 100, 4.4);
             gyroEncoderDrive("backward-left", 100, 1.75);
-            gyroEncoderDrive("leftward", 80, 1);
 
             //Park on line
             gyroEncoderDrive("rightward", 100, 0.7);
@@ -85,7 +87,7 @@ public class Two_Wobble_Goal_Autonomous extends RobotOpMode {
                 gyroEncoderDrive("leftward", 100, 1.3);
             }
             else {
-                gyroEncoderDrive("leftward", 80, 4.1);
+                gyroEncoderDrive("leftward", 100, 4.0);
 
                 //Park on line
                 gyroEncoderDrive("rightward", 100, 2.2);

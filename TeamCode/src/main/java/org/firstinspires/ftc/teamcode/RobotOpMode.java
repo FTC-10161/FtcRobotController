@@ -504,7 +504,7 @@ public class RobotOpMode extends LinearOpMode {
         char configuration;
 
         runtime.reset();
-        while (runtime.milliseconds() < 2000) {
+        while (runtime.milliseconds() < 1000) {
             RowsExceedingRingDetectionThreshold = starter_stack_detector.numberOfTimesRingsDetected;
             telemetry.addData("Rows above Threshold:", RowsExceedingRingDetectionThreshold);
             telemetry.update();
@@ -618,16 +618,16 @@ public class RobotOpMode extends LinearOpMode {
                 timer.reset();
 
                 //Run translation ramp when flywheel speed is within threshold
-                if (-2000 < measured_speed && measured_speed < -1800) {
-                    hardware.translation.setPower(-0.6);
+                if (-2020 < measured_speed && measured_speed < -1820) {
+                    hardware.translation.setPower(-0.8);
                 }
                 //Turn translation ramp off if flywheel is below threshold, and increase flywheel speed if it is not already at 100%
-                else if (measured_speed > -1800 && power >= -1.0) {
+                else if (measured_speed > -1820 && power >= -1.0) {
                     hardware.translation.setPower(0.0);
                     power = power - 0.01;
                 }
                 //Turn translation ramp off if flywheel is above threshold, and decrease flywheel speed if it is not already at 0%
-                else if (measured_speed < -2000 && power <= 0.0) {
+                else if (measured_speed < -2020 && power <= 0.0) {
                     hardware.translation.setPower(0.0);
                     power = power + 0.01;
                 }
@@ -641,7 +641,7 @@ public class RobotOpMode extends LinearOpMode {
 
             //telemetry.addData("-4800 < Target < -5200:  ", measured_speed);
             telemetry.addData("Translation", hardware.translation.getCurrentPosition());
-            telemetry.addData("-2000 < Target < -1800:  ", measured_speed);
+            telemetry.addData("-2020 < Target < -1820:  ", measured_speed);
             telemetry.update();
         }
 

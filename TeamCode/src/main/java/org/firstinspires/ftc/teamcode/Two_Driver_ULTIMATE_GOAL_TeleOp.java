@@ -33,6 +33,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static java.lang.Math.abs;
 
@@ -71,6 +72,11 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
     double ringPusherState = 0.9;
     boolean leftBumperPreviousState = false;
 
+    double measured_speed = 0;
+    double flywheelpower = -1.0;
+
+
+
     @Override
     public void runOpMode() {
 
@@ -83,6 +89,15 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         calculester.init(hardwareMap);
+
+        calculester.translation.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        calculester.translation.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        ElapsedTime timer = new ElapsedTime();
+        ElapsedTime runtime = new ElapsedTime();
+        runtime.reset();
+
+        int prevPosition = calculester.flywheel.getCurrentPosition();
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("We're ready for takeoff", "");    //
@@ -150,9 +165,9 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             } else if (gamepad2.y || gamepad1.y) {
                 wobble_goal_arm_position = -2500;
             } else if (gamepad2.dpad_up) {
-                wobble_goal_arm_position = wobble_goal_arm_position + 15;
+                wobble_goal_arm_position = wobble_goal_arm_position + 30;
             } else if (gamepad2.dpad_down) {
-                wobble_goal_arm_position = wobble_goal_arm_position - 15;
+                wobble_goal_arm_position = wobble_goal_arm_position - 30;
             }
 
             calculester.wobbleGoalArm.setTargetPosition(wobble_goal_arm_position);
@@ -177,13 +192,30 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             }
 
             if (gamepad2.right_trigger > 0.2) {
-                calculester.flywheel.setPower(-1.0);
+                if (timer.milliseconds() > 15) {
+                    measured_speed = (double) (calculester.flywheel.getCurrentPosition() - prevPosition) / timer.time();
+                    prevPosition = calculester.flywheel.getCurrentPosition();
+                    timer.reset();
+
+                    if (measured_speed > -1820 && flywheelpower >= -1.0) {
+                            flywheelpower = flywheelpower - 0.01;
+                    }
+                    else if (measured_speed < -2020 && flywheelpower <= 0.0) {
+                        flywheelpower = flywheelpower + 0.01;
+                    }
+                }
+                    calculester.flywheel.setPower(flywheelpower);
+
+                    //telemetry.addData("-4800 < Target < -5200:  ", measured_speed);
+                    telemetry.addData("Translation", calculester.translation.getCurrentPosition());
+                    telemetry.addData("-2020 < Target < -1820:  ", measured_speed);
+                    telemetry.update();
             }
             else if (gamepad2.left_trigger > 0.2) {
-                calculester.flywheel.setPower(-0.8);
+                calculester.flywheel.setPower(-0.9);
             }
             else {
-                    calculester.flywheel.setPower(0);
+                calculester.flywheel.setPower(0);
             }
 
 
