@@ -12,7 +12,21 @@ public class Movement_Test extends RobotOpMode {
 
         hardwareInit();
 
+        gyroEncoderDrive("forward",60, 3);
+        gyroDriveOrientationChange("East");
+        gyroEncoderDrive("forward",60, 3);
+        gyroDriveOrientationChange("North");
+        gyroEncoderDrive("backward",60, 3);
+        gyroEncoderDrive("leftward",60, 3);
+        pause(2);
+
+        gyroDriveOrientationChange("East");
+        findAbsolutePosition(1, 1);
+        pause(1);
+        findAbsolutePosition(1, 2.5);
+        pause(1);
         findAbsolutePosition(2.5, 2.5);
+        gyroDriveOrientationChange("North");
         pause(1);
         findAbsolutePosition(2.5, 1);
         pause(1);
