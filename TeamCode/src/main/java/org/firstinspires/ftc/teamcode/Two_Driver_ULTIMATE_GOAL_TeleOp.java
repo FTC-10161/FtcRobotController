@@ -214,6 +214,9 @@ public class Two_Driver_ULTIMATE_GOAL_TeleOp extends LinearOpMode {
             else if (gamepad2.left_trigger > 0.2) {
                 calculester.flywheel.setPower(-0.9);
             }
+            else if (gamepad2.left_bumper) {
+                calculester.flywheel.setPower(0.3);
+            }
             else {
                 calculester.flywheel.setPower(0);
             }
